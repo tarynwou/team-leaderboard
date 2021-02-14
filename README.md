@@ -1,28 +1,28 @@
-# Planet Bloom
+# Team Leaderboard
 
-## Gamified Education
+## Gamified Teamwork & Productivity
 
 
 ***What Does This Program Do?***
 
-The application will be a **simple rpg-like learning platform** where users can move a character around the interface 
-to take and navigate through different life courses. The intention is to create an engaging learning environment that
-*gamifies the learning experience* for users with points.
+The application will be a **internal ranking system** where users can add the names of their team members and their 
+corresponding tasks and acts of service they've completed for the team. When the user (a manager) records a task that
+was completed by one of their teammates, that teammate will gain a certain amount of points. The number of points 
+each member has will be reflected through the leadership board. The intention is to *create an incentive for teams 
+to be more productive and engage in organizational citizenship behaviour* through gamification.
 
-> Users will consist of high school or university students who would like to prepare themselves for the real world 
-with practical lessons about life. 
+> Users will consist of managers who want to track progress and determine how much each of their team members have 
+contributed to the team or organization.
 
 ***Why I Want to Pursue This Project:***
-- I've had this idea in my mind for a couple months with no way of executing it, so this is the perfect 
-opportunity for me to start!
-- One day, I'd like to found an ed-tech social enterprise, and I think this project aligns with that goal.
-- Personally, I have a huge passion for learning (personal development), and video games have been a big part of my 
-childhood, so I wanted to combine these two interests.
-- I would also like to learn life skills or how to be an adult, ideally sometime in university.
+- I've had an idea for this in mind for a while with no way of implementing this, so I think this would be a good 
+opportunity to try it out!
+- I manage a team myself, and I personally think this would be very useful to track and reward engaged teammates.
+- I've always enjoyed video games and find gamification of anything to be a good incentive.
 
 ## User Stories
-- As a user, I want to be able to move my character around the screen to browse courses
-- As a user, I want to be able to open and start a course
-- As a user, I want to be able to exit a course and save my course progress
-- As a user, I want to be able to collect points (or experience) to track my progress
-- As a user, I want to be able to edit my user profile
+- As a user, I want to be able to add and remove teammate profiles to and from the system
+- As a user, I want to be able to record a task with the associated team member who completed it
+- As a user, I want to be able to attach a comment with the recorded task
+- As a user, I want to be able to remove points from a teammate
+- As a user, I want to be able to reset the point system

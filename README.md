@@ -22,7 +22,6 @@ opportunity to try it out!
 
 ## User Stories
 - As a user, I want to be able to add and remove teammate profiles to and from the system
-- As a user, I want to be able to record a task with the associated team member who completed it
-- As a user, I want to be able to attach a comment with the recorded task
-- As a user, I want to be able to remove points from a teammate
+- As a user, I want to be able to log an entry with a task type, comment, and the respective team member who completed it
+- As a user, I want to be able to deduct points from a teammate
 - As a user, I want to be able to reset the point system

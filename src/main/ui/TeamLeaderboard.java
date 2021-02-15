@@ -7,7 +7,7 @@ import model.Profile;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// CREDITS: TellarApp Project
+// CREDITS: TellarApp Project for functionalities
 
 // Team Leaderboard
 public class TeamLeaderboard {
@@ -23,13 +23,6 @@ public class TeamLeaderboard {
 
     // be able to add new users in the future
 
-    // TEMPLATE -- DELETE LATER
-    /*
-     * REQUIRES:
-     * MODIFIES:
-     * EFFECTS:
-     */
-
     /*
      * EFFECTS: Runs the team leaderboard
      */
@@ -38,7 +31,6 @@ public class TeamLeaderboard {
     }
 
     /*
-     * REQUIRES:
      * MODIFIES: this
      * EFFECTS: processes user input
      */
@@ -82,9 +74,8 @@ public class TeamLeaderboard {
     }
 
     /*
-     * REQUIRES:
-     * MODIFIES:
-     * EFFECTS:
+     * MODIFIES: this
+     * EFFECTS: processes user command
      */
     private void processCommand(String command) {
         if (command.equals("a")) {
@@ -133,7 +124,7 @@ public class TeamLeaderboard {
         } else if (selection.equals("daniel")) {
             return daniel;
         }
-        return teammate; //idk why i need a return statement here
+        return teammate;
     }
 
     /*
@@ -165,7 +156,7 @@ public class TeamLeaderboard {
         } else if (selection.equals("5")) {
             return 5;
         }
-        return 0; //idk why i need a return statement here
+        return 0;
     }
 
     /*
@@ -241,6 +232,11 @@ public class TeamLeaderboard {
 
     }
 
+    /*
+     * REQUIRES: person must be on the team
+     * MODIFIES: this
+     * EFFECTS: deducts points from a teammate
+     */
     public void deductPoints() {
         System.out.println("Who would you like to deduct points from?");
         Profile teammate = selectPerson();
@@ -249,7 +245,11 @@ public class TeamLeaderboard {
         teammate.removePoints(amount);
     }
 
+    /*
+     * EFFECTS: shows leaderboard
+     */
     public void showLeaderboard() {
+        leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
     }
 }

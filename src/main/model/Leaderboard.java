@@ -6,7 +6,6 @@ import java.util.Collections;
 
 // Represents the leaderboard with teammates and respective points
 public class Leaderboard {
-    private static Profile profile;
     private static ArrayList<Profile> team = new ArrayList<Profile>();
 
     /*

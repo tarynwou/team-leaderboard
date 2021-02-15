@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProfileTest {
-    private Profile alex;
-    private Entry testEntry;
-    private ArrayList<Entry> entries = new ArrayList<Entry>();
+    public Profile alex;
+    public Entry testEntry;
+    public ArrayList<Entry> entries = new ArrayList<Entry>();
 
     @BeforeEach
     public void setup() {

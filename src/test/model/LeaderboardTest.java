@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LeaderboardTest {
-    private Leaderboard testleaderboard;
-    private ArrayList<Profile> team = new ArrayList<Profile>();
-    private Profile alex;
-    private Profile kaitlin;
-    private Profile anjali;
-    private Profile serena;
+    public Leaderboard testleaderboard;
+    public ArrayList<Profile> team = new ArrayList<Profile>();
+    public Profile alex;
+    public Profile kaitlin;
+    public Profile anjali;
+    public Profile serena;
 
 
     @BeforeEach

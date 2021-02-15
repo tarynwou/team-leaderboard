@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Profile {
     private String name;                // name of teammate
     private int points;                 // # of accumulated points
-    // add rank in future
+                                        // add rank in future
     private ArrayList<Entry> entries = new ArrayList<Entry>();   // list of entries associated with this teammate
 
     /*
@@ -89,6 +89,9 @@ public class Profile {
         return "Profile Name: " + name + "; Points: " + points; // Implement entries later in the project
     }
 
+    /*
+     * EFFECTS: prints the name and points of a given profile for the leaderboard
+     */
     public String profileLine() {
         return "\n\t" + name + "   -   " + points;
     }

@@ -71,18 +71,14 @@ public class Profile {
      */
     public void addToEntryList(Entry entry) {
         entries.add(entry);
-        if (entry.getActionType() == "Copywriting") {
+        if (entry.getActionType() == "copywriting") {
             addPoints(150);
-        } else if (entry.getActionType() == "Research") {
+        } else if (entry.getActionType() == "research") {
             addPoints(100);
-        } else if (entry.getActionType() == "Marketing") {
+        } else if (entry.getActionType() == "marketing") {
             addPoints(100);
-        } else if (entry.getActionType() == "Good Deed") {
+        } else if (entry.getActionType() == "good deed") {
             addPoints(50);
-        } else if (entry.getActionType() == "Meeting") {
-            addPoints(25);
-        } else if (entry.getActionType() == "Bonus") {
-            addPoints(5);
         }
     }
 

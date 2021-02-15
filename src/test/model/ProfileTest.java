@@ -64,26 +64,23 @@ public class ProfileTest {
 
     @Test
     public void testAddToEntryList() {
-        testEntry = new Entry("Research", "Added X to Y", "Alex");
+        testEntry = new Entry("research", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
         assertEquals(100, alex.getPoints());
     }
 
     @Test
     public void testAddToEntryLisMultiple() {
-        testEntry = new Entry("Research", "Added X to Y", "Alex");
+        testEntry = new Entry("research", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
-        testEntry = new Entry("Copywriting", "Added X to Y", "Alex");
+        testEntry = new Entry("copywriting", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
-        testEntry = new Entry("Marketing", "Added X to Y", "Alex");
+        testEntry = new Entry("marketing", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
-        testEntry = new Entry("Good Deed", "Added X to Y", "Alex");
+        testEntry = new Entry("good deed", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
-        testEntry = new Entry("Meeting", "Added X to Y", "Alex");
-        alex.addToEntryList(testEntry);
-        testEntry = new Entry("Bonus", "Added X to Y", "Alex");
-        alex.addToEntryList(testEntry);
-        assertEquals(430, alex.getPoints());
+
+        assertEquals(400, alex.getPoints());
     }
 
     @Test

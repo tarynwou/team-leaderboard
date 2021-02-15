@@ -1,5 +1,6 @@
 package ui;
 
+import model.Entry;
 import model.Leaderboard;
 import model.Profile;
 
@@ -74,6 +75,7 @@ public class TeamLeaderboard {
         System.out.println("\ta -> add teammate");
         System.out.println("\td -> remove teammate");
         System.out.println("\tl -> log entry");
+        System.out.println("\tm -> deduct points");
         System.out.println("\ts -> show leaderboard");
         System.out.println("\tr -> reset leaderboard");
         System.out.println("\tq -> quit");
@@ -91,8 +93,10 @@ public class TeamLeaderboard {
             removeTeammate();
         } else if (command.equals("l")) {
             logEntry();
-        } else if (command.equals("s")) {
-            Leaderboard.showLeaderboard(team);
+        } else if (command.equals("m")) {
+            deductPoints();
+        }  else if (command.equals("s")) {
+            showLeaderboard();
         } else if (command.equals("r")) {
             Leaderboard.resetLeaderboard(team);
         } else {
@@ -171,30 +175,25 @@ public class TeamLeaderboard {
     private String selectAction() {
         String selection = "";  // force entry into loop
 
-        while (!(selection.equals("Copywriting")) || selection.equals("Research") || selection.equals("Marketing")
-                || selection.equals("Good Deed") || selection.equals("Meeting") || selection.equals("Bonus")) {
-            System.out.println("Copywriting");
-            System.out.println("Research");
-            System.out.println("Marketing");
-            System.out.println("Good Deed");
-            System.out.println("Meeting");
-            System.out.println("Bonus");
+        while (!(selection.equals("copywriting") || selection.equals("research") || selection.equals("marketing")
+                || selection.equals("good deed"))) {
+            System.out.println("copywriting");
+            System.out.println("research");
+            System.out.println("marketing");
+            System.out.println("good deed");
             selection = input.next();
+            selection += input.nextLine();
             selection = selection.toLowerCase();
         }
 
-        if (selection.equals("Copywriting")) {
-            return alex;
-        } else if (selection.equals("Research")) {
-            return kaitlin;
-        } else if (selection.equals("Marketing")) {
-            return anjali;
-        } else if (selection.equals("Good Deed")) {
-            return serena;
-        } else if (selection.equals("Meeting")) {
-            return daniel;
-        } else if (selection.equals("Bonus")) {
-            return daniel;
+        if (selection.equals("copywriting")) {
+            return "copywriting";
+        } else if (selection.equals("research")) {
+            return "research";
+        } else if (selection.equals("marketing")) {
+            return "marketing";
+        } else if (selection.equals("good deed")) {
+            return "good deed";
         }
         return "Not an action";
     }
@@ -230,10 +229,27 @@ public class TeamLeaderboard {
      */
     public void logEntry() {
         System.out.println("What was the action?");
-
+        String actionType = selectAction();
         System.out.println("Attach a comment");
-
+        String comment = input.next();
+        comment += input.nextLine();
         System.out.println("Who completed this action?");
         Profile teammate = selectPerson();
+
+        Entry entry = new Entry(actionType, comment, teammate.getName());
+        teammate.addToEntryList(entry);
+
+    }
+
+    public void deductPoints() {
+        System.out.println("Who would you like to deduct points from?");
+        Profile teammate = selectPerson();
+        System.out.println("How many points would you like to deduct?");
+        int amount = input.nextInt();
+        teammate.removePoints(amount);
+    }
+
+    public void showLeaderboard() {
+        System.out.println(leaderboard.showLeaderboard(team));
     }
 }

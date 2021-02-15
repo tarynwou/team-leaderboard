@@ -2,22 +2,16 @@ package model;
 
 import java.util.ArrayList;
 
+// Represents a teammate's profile on the leaderboard
 public class Profile {
     private String name;                // name of teammate
     private int points;                 // # of accumulated points
-    private ArrayList<Entry> entries;   // list of entries associated with this teammate
-
-    // TEMPLATE -- DELETE LATER
-    /*
-     * REQUIRES:
-     * MODIFIES:
-     * EFFECTS:
-     */
+    // add rank in future
+    private ArrayList<Entry> entries = new ArrayList<Entry>();   // list of entries associated with this teammate
 
     /*
      * REQUIRES: profileName has a non-zero length
-     * MODIFIES:
-     * EFFECTS:
+     * EFFECTS: name on profile is set to profileName and points on profile are set to 0
      */
     public Profile(String profileName) {
         name = profileName;
@@ -32,47 +26,74 @@ public class Profile {
         return points;
     }
 
+    public Entry getEntry(int number) {
+        return entries.get(number);
+    }
+
+    // METHODS
+
     /*
-     * REQUIRES:
-     * MODIFIES:
+     * REQUIRES: amount is a positive integer
+     * MODIFIES: points
      * EFFECTS: adds a specified number of points from Profile's points
      */
-    public void addPoints(int amount) {
+    public int addPoints(int amount) {
         points = points + amount;
+        return points;
     }
 
     /*
-     * REQUIRES:
-     * MODIFIES:
+     * REQUIRES: amount is a positive integer
+     * MODIFIES: points
      * EFFECTS: deducts a specified number of points from Profile's points
      */
-    public void deductPoints(int amount) {
+    public int removePoints(int amount) {
         if (points - amount < 0) {
             points = 0;
         } else {
             points = points - amount;
         }
+        return points;
     }
 
     /*
-     * REQUIRES:
-     * MODIFIES:
-     * EFFECTS:
+     * MODIFIES: points
+     * EFFECTS: sets points to 0
      */
-    public void clearPoints() {
+    public int clearPoints() {
         points = 0;
+        return points;
     }
 
     /*
-     * REQUIRES:
-     * MODIFIES:
-     * EFFECTS:
+     * MODIFIES: entries
+     * EFFECTS: adds an entry to the profile's list of entries
      */
     public void addToEntryList(Entry entry) {
         entries.add(entry);
+        if (entry.getActionType() == "Copywriting") {
+            addPoints(150);
+        } else if (entry.getActionType() == "Research") {
+            addPoints(100);
+        } else if (entry.getActionType() == "Marketing") {
+            addPoints(100);
+        } else if (entry.getActionType() == "Good Deed") {
+            addPoints(50);
+        } else if (entry.getActionType() == "Meeting") {
+            addPoints(25);
+        } else if (entry.getActionType() == "Bonus") {
+            addPoints(5);
+        }
     }
 
-    public String seeProfile(Profile profile) {
+    /*
+     * EFFECTS: prints the name and points of a given profile
+     */
+    public String seeProfile() {
         return "Profile Name: " + name + "; Points: " + points; // Implement entries later in the project
+    }
+
+    public String profileLine() {
+        return "\n\t" + name + "   -   " + points;
     }
 }

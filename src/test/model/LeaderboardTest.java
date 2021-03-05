@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.NotOnLeaderboardException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +46,7 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testRemoveProfileToZeroV1() {
+    public void testRemoveProfileToZeroV1() throws NotOnLeaderboardException {
         testleaderboard.removeProfile("Alex");
         testleaderboard.removeProfile("Kaitlin");
         testleaderboard.removeProfile("Anjali");
@@ -53,7 +54,7 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testRemoveProfileToZeroV2() {
+    public void testRemoveProfileToZeroV2() throws NotOnLeaderboardException {
         testleaderboard.removeProfile("Anjali");
         testleaderboard.removeProfile("Kaitlin");
         testleaderboard.removeProfile("Alex");
@@ -61,7 +62,7 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testRemoveProfileLeftover() {
+    public void testRemoveProfileLeftover() throws NotOnLeaderboardException {
         testleaderboard.removeProfile("Alex");
 
         assertEquals(2, team.size());
@@ -102,7 +103,7 @@ public class LeaderboardTest {
 
 
     @Test
-    public void testSwap() {
+    public void testSwap() throws NotOnLeaderboardException {
         testleaderboard.removeProfile("Anjali");
         testleaderboard.swap(2);
         assertEquals("\nLEADERBOARD" +

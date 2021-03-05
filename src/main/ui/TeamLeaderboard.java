@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.NotOnLeaderboardException;
 import model.Entry;
 import model.Leaderboard;
 import model.Profile;
@@ -155,9 +156,10 @@ public class TeamLeaderboard {
         try {
             leaderboard.removeProfile(name);
         } catch (ConcurrentModificationException e) {
-            leaderboard.removeProfile(name);
+            System.out.println("\nYou removed " + name + " from the team!");
+        } catch (NotOnLeaderboardException e) {
+            System.out.println("\nThere is no teammate with that name on the leaderboard...");
         }
-        System.out.println("\nYou removed " + name + " from the team!");
         System.out.println(leaderboard.showLeaderboard(team));
     }
 

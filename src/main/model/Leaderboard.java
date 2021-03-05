@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.NotOnLeaderboardException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,14 +34,32 @@ public class Leaderboard {
      * MODIFIES: profiles
      * EFFECTS: removes the profile with given rank from the leaderboard
      */
-    //TODO check tests for this and modify to check if you try to remove someone not on the team
-    public void removeProfile(String name) {
+    public void removeProfile(String name) throws NotOnLeaderboardException {
+        if (doesNotContain(name) == true) {
+            throw new NotOnLeaderboardException();
+        }
+
         for (Profile teammate : team) {
             if (teammate.getName().contains(name)) {
                 team.remove(teammate);
             }
         }
+
     }
+
+    /*
+     * EFFECTS: returns false if the list does not contain s
+     */
+    public boolean doesNotContain(String s) {
+        boolean b = true;
+        for (Profile teammate : team) {
+            if (teammate.getName().contains(s)) {
+                b = false;
+            }
+        }
+        return b;
+    }
+
 
     /*
      * REQUIRES: non-empty team

@@ -25,3 +25,5 @@ opportunity to try it out!
 - As a user, I want to be able to log an entry with a task type, comment, and the respective team member who completed it
 - As a user, I want to be able to deduct points from a teammate
 - As a user, I want to be able to reset the point system
+- As a user, I want to be able to save my leaderboard to file
+- As a user, I want to be able to reload my last leaderboard from file

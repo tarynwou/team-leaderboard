@@ -221,7 +221,7 @@ public class TeamLeaderboard {
     public void logEntry() {
         System.out.println("What was the action?");
         String actionType = selectAction();
-        System.out.println("Attach a comment");
+        System.out.println("Attach a comment on their performance.");
         String comment = input.next();
         comment += input.nextLine();
         System.out.println("Who completed this action?");
@@ -229,6 +229,8 @@ public class TeamLeaderboard {
 
         Entry entry = new Entry(actionType, comment, teammate.getName());
         teammate.addToEntryList(entry);
+
+        System.out.println(leaderboard.showLeaderboard(team));
 
     }
 
@@ -243,6 +245,7 @@ public class TeamLeaderboard {
         System.out.println("How many points would you like to deduct?");
         int amount = input.nextInt();
         teammate.removePoints(amount);
+        System.out.println(leaderboard.showLeaderboard(team));
     }
 
     /*

@@ -27,13 +27,18 @@ public class Leaderboard {
         team.add(profile);
     }
 
+
     /*
-     * REQUIRES: rank <= size of profiles
      * MODIFIES: profiles
      * EFFECTS: removes the profile with given rank from the leaderboard
      */
-    public void removeProfile(int rank) {
-        team.remove(rank - 1);
+    //TODO check tests for this and modify to check if you try to remove someone not on the team
+    public void removeProfile(String name) {
+        for (Profile teammate : team) {
+            if (teammate.getName().contains(name)) {
+                team.remove(teammate);
+            }
+        }
     }
 
     /*

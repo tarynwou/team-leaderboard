@@ -21,7 +21,7 @@ public class LeaderboardTest {
         alex = new Profile("Alex");
         kaitlin = new Profile("Kaitlin");
         anjali = new Profile("Anjali");
-        serena = new Profile("serena");
+        serena = new Profile("Serena");
 
         testleaderboard = new Leaderboard(team);
         testleaderboard.addProfile(alex);
@@ -46,23 +46,23 @@ public class LeaderboardTest {
 
     @Test
     public void testRemoveProfileToZeroV1() {
-        testleaderboard.removeProfile(1);
-        testleaderboard.removeProfile(1);
-        testleaderboard.removeProfile(1);
+        testleaderboard.removeProfile("Alex");
+        testleaderboard.removeProfile("Kaitlin");
+        testleaderboard.removeProfile("Anjali");
         assertEquals(0, team.size());
     }
 
     @Test
     public void testRemoveProfileToZeroV2() {
-        testleaderboard.removeProfile(3);
-        testleaderboard.removeProfile(2);
-        testleaderboard.removeProfile(1);
+        testleaderboard.removeProfile("Anjali");
+        testleaderboard.removeProfile("Kaitlin");
+        testleaderboard.removeProfile("Alex");
         assertEquals(0, team.size());
     }
 
     @Test
     public void testRemoveProfileLeftover() {
-        testleaderboard.removeProfile(1);
+        testleaderboard.removeProfile("Alex");
 
         assertEquals(2, team.size());
         assertEquals(kaitlin, testleaderboard.getProfile(1));
@@ -103,7 +103,7 @@ public class LeaderboardTest {
 
     @Test
     public void testSwap() {
-        testleaderboard.removeProfile(3);
+        testleaderboard.removeProfile("Anjali");
         testleaderboard.swap(2);
         assertEquals("\nLEADERBOARD" +
                         "\n\tKaitlin   -   0" +

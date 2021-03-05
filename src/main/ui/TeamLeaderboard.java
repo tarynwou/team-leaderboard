@@ -5,6 +5,7 @@ import model.Leaderboard;
 import model.Profile;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Scanner;
 
 // CREDITS: TellarApp Project for functionalities
@@ -15,11 +16,11 @@ public class TeamLeaderboard {
     private Leaderboard leaderboard = new Leaderboard(team);
     private Profile teammate;
     private Scanner input;
-    private Profile alex = new Profile("Alex");
-    private Profile kaitlin = new Profile("Kaitlin");
-    private Profile anjali = new Profile("Anjali");
-    private Profile serena = new Profile("Serena");
-    private Profile daniel = new Profile("Daniel");
+//    private Profile alex = new Profile("Alex");
+//    private Profile kaitlin = new Profile("Kaitlin");
+//    private Profile anjali = new Profile("Anjali");
+//    private Profile serena = new Profile("Serena");
+//    private Profile daniel = new Profile("Daniel");
 
     // be able to add new users in the future
 
@@ -77,6 +78,7 @@ public class TeamLeaderboard {
      * MODIFIES: this
      * EFFECTS: processes user command
      */
+    //TODO: Add viewEntries()/viewProfile method.
     private void processCommand(String command) {
         if (command.equals("a")) {
             addTeammate();
@@ -100,31 +102,32 @@ public class TeamLeaderboard {
      * EFFECTS: selects a person
      */
     private Profile selectPerson() {
-        String selection = "";  // force entry into loop
-
-        while (!(selection.equals("alex") || selection.equals("kaitlin") || selection.equals("anjali")
-                || selection.equals("serena") || selection.equals("daniel"))) {
-            System.out.println("alex");
-            System.out.println("kaitlin");
-            System.out.println("anjali");
-            System.out.println("serena");
-            System.out.println("daniel");
-            selection = input.next();
-            selection = selection.toLowerCase();
-        }
-
-        if (selection.equals("alex")) {
-            return alex;
-        } else if (selection.equals("kaitlin")) {
-            return kaitlin;
-        } else if (selection.equals("anjali")) {
-            return anjali;
-        } else if (selection.equals("serena")) {
-            return serena;
-        } else if (selection.equals("daniel")) {
-            return daniel;
-        }
-        return teammate;
+//        String selection = "";  // force entry into loop
+//        //TODO: adjust code to pick any teammate on the leaderboard
+//
+//        while (!(selection.equals("alex") || selection.equals("kaitlin") || selection.equals("anjali")
+//                || selection.equals("serena") || selection.equals("daniel"))) {
+//            System.out.println("alex");
+//            System.out.println("kaitlin");
+//            System.out.println("anjali");
+//            System.out.println("serena");
+//            System.out.println("daniel");
+//            selection = input.next();
+//            selection = selection.toLowerCase();
+//        }
+//
+//        if (selection.equals("alex")) {
+//            return alex;
+//        } else if (selection.equals("kaitlin")) {
+//            return kaitlin;
+//        } else if (selection.equals("anjali")) {
+//            return anjali;
+//        } else if (selection.equals("serena")) {
+//            return serena;
+//        } else if (selection.equals("daniel")) {
+//            return daniel;
+//        }
+        return teammate; //fix this
     }
 
     /*
@@ -166,38 +169,41 @@ public class TeamLeaderboard {
     private String selectAction() {
         String selection = "";  // force entry into loop
 
-        while (!(selection.equals("copywriting") || selection.equals("research") || selection.equals("marketing")
-                || selection.equals("good deed"))) {
-            System.out.println("copywriting");
-            System.out.println("research");
-            System.out.println("marketing");
-            System.out.println("good deed");
+        while (!(selection.equals("c") || selection.equals("r") || selection.equals("m")
+                || selection.equals("g"))) {
+            System.out.println("c - copywriting (150pts)");
+            System.out.println("r - research (100pts)");
+            System.out.println("m - marketing (100pts)");
+            System.out.println("g - good deed (50pts)");
             selection = input.next();
             selection += input.nextLine();
             selection = selection.toLowerCase();
         }
 
-        if (selection.equals("copywriting")) {
+        if (selection.equals("c")) {
             return "copywriting";
-        } else if (selection.equals("research")) {
+        } else if (selection.equals("r")) {
             return "research";
-        } else if (selection.equals("marketing")) {
+        } else if (selection.equals("m")) {
             return "marketing";
-        } else if (selection.equals("good deed")) {
+        } else if (selection.equals("g")) {
             return "good deed";
         }
         return "Not an action";
     }
 
     /*
+     * REQUIRES: name cannot already exist on the leaderboard
      * MODIFIES: this
      * EFFECTS: adds a person to the team leaderboard
      */
     private void addTeammate() {
         System.out.println("\nWho would you like to add to the team?");
-        Profile teammate = selectPerson();
-        leaderboard.addProfile(teammate);
-        System.out.println("\nYou added " + teammate.getName() + " to the team!");
+        String name = input.next();
+        name += input.nextLine();
+        Profile newTeammate = new Profile(name);
+        leaderboard.addProfile(newTeammate);
+        System.out.println("\nYou added " + newTeammate.getName() + " to the team!");
         System.out.println(leaderboard.showLeaderboard(team));
     }
 
@@ -207,9 +213,16 @@ public class TeamLeaderboard {
      */
     private void removeTeammate() {
         System.out.println("Who would you like to remove from the team?");
-        int rank = selectRank();
-        System.out.println("\nYou removed " + team.get(rank - 1).getName() + " from the team!");
-        leaderboard.removeProfile(rank);
+        //TODO: user can delete a teammate from the leaderboard with only the name
+        String name = input.next();
+        name += input.nextLine();
+
+        try {
+            leaderboard.removeProfile(name);
+        } catch (ConcurrentModificationException e) {
+            leaderboard.removeProfile(name);
+        }
+        System.out.println("\nYou removed " + name + " from the team!");
         System.out.println(leaderboard.showLeaderboard(team));
     }
 
@@ -225,10 +238,15 @@ public class TeamLeaderboard {
         String comment = input.next();
         comment += input.nextLine();
         System.out.println("Who completed this action?");
-        Profile teammate = selectPerson();
+        String name = input.next();
+        name += input.nextLine();
 
-        Entry entry = new Entry(actionType, comment, teammate.getName());
-        teammate.addToEntryList(entry);
+        Entry entry = new Entry(actionType, comment, name);
+        for (Profile teammate : team) {
+            if (teammate.getName().contains(name)) {
+                teammate.addToEntryList(entry);
+            }
+        }
 
         System.out.println(leaderboard.showLeaderboard(team));
 

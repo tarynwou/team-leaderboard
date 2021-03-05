@@ -1,13 +1,16 @@
 package model;
 
 import exceptions.NotOnLeaderboardException;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+//TODO: Fix tests
 
 // Represents the leaderboard with teammates and respective points
-public class Leaderboard {
+public class Leaderboard implements Writable {
     private static ArrayList<Profile> team = new ArrayList<Profile>();
 
     /*
@@ -114,6 +117,11 @@ public class Leaderboard {
         for (Profile t : team) {
             moveUp(team.size());
         }
+    }
+
+    public JSONObject toJson() {
+        //stub
+        return null;
     }
 
 

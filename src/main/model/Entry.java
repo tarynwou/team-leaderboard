@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents an entry with an action type, comment, and teammate responsible
-public class Entry {
+public class Entry implements Writable {
     private String actionType;
     private String comment;
     private String teammate;
@@ -29,5 +32,9 @@ public class Entry {
         return teammate;
     }
 
+    public JSONObject toJson() {
+        //stub
+        return null;
+    }
 
 }

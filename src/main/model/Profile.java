@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a teammate's profile on the leaderboard
-public class Profile {
+public class Profile implements Writable {
     private String name;                // name of teammate
     private int points;                 // # of accumulated points
                                         // add rank in future
@@ -95,4 +98,10 @@ public class Profile {
     public String profileLine() {
         return "\n\t" + name + "   -   " + points;
     }
+
+    public JSONObject toJson() {
+        //stub
+        return null;
+    }
+
 }

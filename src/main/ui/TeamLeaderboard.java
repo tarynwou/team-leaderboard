@@ -130,37 +130,38 @@ public class TeamLeaderboard {
         return teammate; //fix this
     }
 
-    /*
-     * REQUIRES: input must be between 1 and 5
-     * EFFECTS: selects a rank on the leaderboard
-     */
-    private int selectRank() {
-        String selection = "";  // force entry into loop
-
-        while (!(selection.equals("1") || selection.equals("2") || selection.equals("3")
-                || selection.equals("4") || selection.equals("5"))) {
-            System.out.println("1 for Rank 1");
-            System.out.println("2 for Rank 2");
-            System.out.println("3 for Rank 3");
-            System.out.println("4 for Rank 4");
-            System.out.println("5 for Rank 5");
-            selection = input.next();
-            selection = selection.toLowerCase();
-        }
-
-        if (selection.equals("1")) {
-            return 1;
-        } else if (selection.equals("2")) {
-            return 2;
-        } else if (selection.equals("3")) {
-            return 3;
-        } else if (selection.equals("4")) {
-            return 4;
-        } else if (selection.equals("5")) {
-            return 5;
-        }
-        return 0;
-    }
+    //TODO: Determine if you still need this selectRank() method.
+//    /*
+//     * REQUIRES: input must be between 1 and 5
+//     * EFFECTS: selects a rank on the leaderboard
+//     */
+//    private int selectRank() {
+//        String selection = "";  // force entry into loop
+//
+//        while (!(selection.equals("1") || selection.equals("2") || selection.equals("3")
+//                || selection.equals("4") || selection.equals("5"))) {
+//            System.out.println("1 for Rank 1");
+//            System.out.println("2 for Rank 2");
+//            System.out.println("3 for Rank 3");
+//            System.out.println("4 for Rank 4");
+//            System.out.println("5 for Rank 5");
+//            selection = input.next();
+//            selection = selection.toLowerCase();
+//        }
+//
+//        if (selection.equals("1")) {
+//            return 1;
+//        } else if (selection.equals("2")) {
+//            return 2;
+//        } else if (selection.equals("3")) {
+//            return 3;
+//        } else if (selection.equals("4")) {
+//            return 4;
+//        } else if (selection.equals("5")) {
+//            return 5;
+//        }
+//        return 0;
+//    }
 
     /*
      * REQUIRES: person is on the list
@@ -213,7 +214,7 @@ public class TeamLeaderboard {
      */
     private void removeTeammate() {
         System.out.println("Who would you like to remove from the team?");
-        //TODO: user can delete a teammate from the leaderboard with only the name
+        //User can input the name of the teammate they want to remove
         String name = input.next();
         name += input.nextLine();
 
@@ -259,10 +260,16 @@ public class TeamLeaderboard {
      */
     public void deductPoints() {
         System.out.println("Who would you like to deduct points from?");
-        Profile teammate = selectPerson();
+        String name = input.next();
+        name += input.nextLine();
+
         System.out.println("How many points would you like to deduct?");
         int amount = input.nextInt();
-        teammate.removePoints(amount);
+        for (Profile teammate : team) {
+            if (teammate.getName().contains(name)) {
+                teammate.removePoints(amount);
+            }
+        }
         System.out.println(leaderboard.showLeaderboard(team));
     }
 

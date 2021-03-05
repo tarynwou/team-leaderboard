@@ -73,11 +73,11 @@ public class Profile {
         entries.add(entry);
         if (entry.getActionType() == "copywriting") {
             addPoints(150);
-        } else if (entry.getActionType() == "research") {
-            addPoints(100);
         } else if (entry.getActionType() == "marketing") {
             addPoints(100);
-        } else if (entry.getActionType() == "good deed") {
+        } else if (entry.getActionType() == "research") {
+            addPoints(100);
+        } else if (entry.getActionType() == "something good") {
             addPoints(50);
         }
     }

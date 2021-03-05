@@ -105,11 +105,11 @@ public class TeamLeaderboard {
         String selection = "";  // force entry into loop
 
         while (!(selection.equals("c") || selection.equals("r") || selection.equals("m")
-                || selection.equals("g"))) {
+                || selection.equals("s"))) {
             System.out.println("c - copywriting (150pts)");
-            System.out.println("r - research (100pts)");
             System.out.println("m - marketing (100pts)");
-            System.out.println("g - good deed (50pts)");
+            System.out.println("r - research (100pts)");
+            System.out.println("s - something good (50pts)");
             selection = input.next();
             selection += input.nextLine();
             selection = selection.toLowerCase();
@@ -121,8 +121,8 @@ public class TeamLeaderboard {
             return "research";
         } else if (selection.equals("m")) {
             return "marketing";
-        } else if (selection.equals("g")) {
-            return "good deed";
+        } else if (selection.equals("s")) {
+            return "something good";
         }
         return "Not an action";
     }

@@ -1,6 +1,7 @@
 package model;
 
 import exceptions.NotOnLeaderboardException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -119,9 +120,24 @@ public class Leaderboard implements Writable {
         }
     }
 
+    @Override
     public JSONObject toJson() {
-        //stub
-        return null;
+        JSONObject json = new JSONObject();
+
+        json.put("profiles", profilesToJson());
+        return json;
+    }
+
+    /*
+     * EFFECTS: returns profiles on this leaderboard as a JSON array
+     */
+    private JSONArray profilesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Profile p : team) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
     }
 
 

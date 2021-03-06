@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -99,9 +100,27 @@ public class Profile implements Writable {
         return "\n\t" + name + "   -   " + points;
     }
 
+
+    @Override
     public JSONObject toJson() {
-        //stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("points", points);
+        json.put("entries", profileEntriesToJson());
+        return json;
     }
+
+    /*
+     * EFFECTS: returns entries in this profile as a JSON array
+     */
+    private JSONArray profileEntriesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Entry e : entries) {
+            jsonArray.put(e.toJson());
+        }
+        return jsonArray;
+    }
+
 
 }

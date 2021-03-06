@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Scanner;
 
-// CREDITS: TellarApp Project for functionalities
+// CREDITS: TellarApp Project and JsonSerializationDemo for functionalities
 
 // Team Leaderboard
 public class TeamLeaderboard {

@@ -32,9 +32,18 @@ public class Entry implements Writable {
         return teammate;
     }
 
+    // EFFECTS: returns string representation of this entry
+    public String toString() {
+        return actionType + ": " + comment + ": " + teammate;
+    }
+
+    @Override
     public JSONObject toJson() {
-        //stub
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("actionType", actionType);
+        json.put("comment", comment);
+        json.put("teammate", teammate);
+        return json;
     }
 
 }

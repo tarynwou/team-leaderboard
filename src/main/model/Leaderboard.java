@@ -25,6 +25,16 @@ public class Leaderboard implements Writable {
         return team.get(number - 1);
     }
 
+    // EFFECTS: returns a list of profiles on this leaderboard
+    public ArrayList<Profile> getProfiles() {
+        return team;
+    }
+
+    // EFFECTS: returns number of profiles on this leaderboard
+    public int numProfiles() {
+        return team.size();
+    }
+
     /*
      * MODIFIES: profiles
      * EFFECTS: adds a profile to the list of profiles
@@ -32,7 +42,6 @@ public class Leaderboard implements Writable {
     public void addProfile(Profile profile) {
         team.add(profile);
     }
-
 
     /*
      * MODIFIES: profiles

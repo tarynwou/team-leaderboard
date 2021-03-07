@@ -62,12 +62,15 @@ public class LeaderboardTest {
     }
 
     @Test
-    public void testRemoveProfileLeftover() throws NotOnLeaderboardException {
-        testleaderboard.removeProfile("Alex");
-
-        assertEquals(2, team.size());
-        assertEquals(kaitlin, testleaderboard.getProfile(1));
-        assertEquals(anjali, testleaderboard.getProfile(2));
+    public void testRemoveProfileLeftover() {
+        try {
+            testleaderboard.removeProfile("Alex");
+            assertEquals(2, team.size());
+            assertEquals(kaitlin, testleaderboard.getProfile(1));
+            assertEquals(anjali, testleaderboard.getProfile(2));
+        } catch (NotOnLeaderboardException e) {
+            fail();
+        }
     }
 
     @Test

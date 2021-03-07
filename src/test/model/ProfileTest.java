@@ -77,7 +77,7 @@ public class ProfileTest {
         alex.addToEntryList(testEntry);
         testEntry = new Entry("marketing", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
-        testEntry = new Entry("good deed", "Added X to Y", "Alex");
+        testEntry = new Entry("something good", "Added X to Y", "Alex");
         alex.addToEntryList(testEntry);
 
         assertEquals(400, alex.getPoints());

@@ -1,0 +1,16 @@
+{"profiles": [
+  {
+    "entries": [{
+      "actionType": "copywriting",
+      "teammate": "a",
+      "comment": "djkfsa"
+    }],
+    "name": "a",
+    "points": 150
+  },
+  {
+    "entries": [],
+    "name": "b",
+    "points": 0
+  }
+]}

@@ -34,6 +34,10 @@ public class Profile implements Writable {
         return entries.get(number);
     }
 
+    public ArrayList<Entry> getEntries() {
+        return entries;
+    }
+
     // METHODS
 
     /*

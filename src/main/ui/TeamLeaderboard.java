@@ -5,6 +5,11 @@ import model.Entry;
 import model.Leaderboard;
 import model.Profile;
 
+import persistence.JsonWriter;
+import persistence.JsonReader;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Scanner;
@@ -14,23 +19,24 @@ import java.util.Scanner;
 // Team Leaderboard
 public class TeamLeaderboard {
     private ArrayList<Profile> team = new ArrayList<Profile>();
-    private Leaderboard leaderboard = new Leaderboard(team);
+    private Leaderboard leaderboard;
     private Profile teammate;
     private Scanner input;
-//    private Profile alex = new Profile("Alex");
-//    private Profile kaitlin = new Profile("Kaitlin");
-//    private Profile anjali = new Profile("Anjali");
-//    private Profile serena = new Profile("Serena");
-//    private Profile daniel = new Profile("Daniel");
 
-    // be able to add new users in the future
+    private static final String JSON_STORE = "./data/leaderboard.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     /*
      * EFFECTS: Runs the team leaderboard
      */
     public TeamLeaderboard() {
+        leaderboard = new Leaderboard(team);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runLeaderboard();
     }
+
 
     /*
      * MODIFIES: this
@@ -68,10 +74,12 @@ public class TeamLeaderboard {
         System.out.println("\nWhat would you like to do:");
         System.out.println("\ta -> add teammate");
         System.out.println("\td -> remove teammate");
-        System.out.println("\tl -> log entry");
+        System.out.println("\te -> log entry");
+        System.out.println("\tl -> show leaderboard");
         System.out.println("\tm -> deduct points");
-        System.out.println("\ts -> show leaderboard");
-        System.out.println("\tr -> reset leaderboard");
+        System.out.println("\tn -> new leaderboard"); // --> are you sure confirmation message
+        System.out.println("\tr -> reload previous leaderboard");
+        System.out.println("\ts -> save leaderboard");
         System.out.println("\tq -> quit");
     }
 
@@ -85,14 +93,18 @@ public class TeamLeaderboard {
             addTeammate();
         } else if (command.equals("d")) {
             removeTeammate();
-        } else if (command.equals("l")) {
+        } else if (command.equals("e")) {   //TODO: user should receive a message if the user DNE
             logEntry();
+        } else if (command.equals("l")) {
+            showLeaderboard();
         } else if (command.equals("m")) {
             deductPoints();
-        }  else if (command.equals("s")) {
-            showLeaderboard();
-        } else if (command.equals("r")) {
+        } else if (command.equals("n")) {
             Leaderboard.resetLeaderboard(team);
+        } else if (command.equals("r")) {
+            reloadLeaderboard();
+        } else if (command.equals("s")) {
+            saveLeaderboard();
         } else {
             System.out.println("That is not a valid command. Try again.");
         }
@@ -215,5 +227,32 @@ public class TeamLeaderboard {
     public void showLeaderboard() {
         leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveLeaderboard() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(leaderboard);
+            jsonWriter.close();
+            System.out.println("Saved leaderboard" + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        } finally {
+            System.out.println(leaderboard.showLeaderboard(team));
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void reloadLeaderboard() {
+        try {
+            leaderboard = jsonReader.read();
+            System.out.println("Loaded leaderboard" + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        } finally {
+            System.out.println(leaderboard.showLeaderboard(team));
+        }
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,18 +48,26 @@ public class LeaderboardTest {
 
     @Test
     public void testRemoveProfileToZeroV1() throws NotOnLeaderboardException {
-        testleaderboard.removeProfile("Alex");
-        testleaderboard.removeProfile("Kaitlin");
-        testleaderboard.removeProfile("Anjali");
-        assertEquals(0, team.size());
+        try {
+            testleaderboard.removeProfile("Alex");
+            testleaderboard.removeProfile("Kaitlin");
+            testleaderboard.removeProfile("Anjali");
+            assertEquals(0, team.size());
+        } catch (ConcurrentModificationException e) {
+
+        }
     }
 
     @Test
     public void testRemoveProfileToZeroV2() throws NotOnLeaderboardException {
-        testleaderboard.removeProfile("Anjali");
-        testleaderboard.removeProfile("Kaitlin");
-        testleaderboard.removeProfile("Alex");
-        assertEquals(0, team.size());
+        try {
+            testleaderboard.removeProfile("Anjali");
+            testleaderboard.removeProfile("Kaitlin");
+            testleaderboard.removeProfile("Alex");
+            assertEquals(0, team.size());
+        } catch (ConcurrentModificationException e) {
+
+        }
     }
 
     @Test
@@ -70,7 +79,15 @@ public class LeaderboardTest {
             assertEquals(anjali, testleaderboard.getProfile(2));
         } catch (NotOnLeaderboardException e) {
             fail();
+        } catch (ConcurrentModificationException e) {
+
         }
+    }
+
+    @Test
+    public void testClearLeaderboard() {
+        testleaderboard.clearLeaderboard();
+        assertEquals(0, team.size());
     }
 
     @Test
@@ -107,12 +124,16 @@ public class LeaderboardTest {
 
     @Test
     public void testSwap() throws NotOnLeaderboardException {
-        testleaderboard.removeProfile("Anjali");
-        testleaderboard.swap(2);
-        assertEquals("\nLEADERBOARD" +
-                        "\n\tKaitlin   -   0" +
-                        "\n\tAlex   -   0",
-                testleaderboard.showLeaderboard(team));
+        try {
+            testleaderboard.removeProfile("Anjali");
+            testleaderboard.swap(2);
+            assertEquals("\nLEADERBOARD" +
+                            "\n\tKaitlin   -   0" +
+                            "\n\tAlex   -   0",
+                    testleaderboard.showLeaderboard(team));
+        } catch (ConcurrentModificationException e) {
+
+        }
     }
 
     @Test

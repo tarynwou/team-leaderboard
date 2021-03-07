@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.NotOnLeaderboardException;
 import model.Entry;
 import model.Leaderboard;
 import model.Profile;
@@ -30,7 +31,7 @@ public class JsonWriterTest extends JsonTest {
     }
 
     @Test
-    void testWriterEmptyWorkroom() {
+    void testWriterEmptyLeaderboard() {
         try {
             Leaderboard leaderboard = new Leaderboard(team);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyLeaderboard.json");
@@ -38,16 +39,21 @@ public class JsonWriterTest extends JsonTest {
             writer.write(leaderboard);
             writer.close();
 
+            ArrayList<Profile> team = new ArrayList<Profile>();
+            Leaderboard cl = new Leaderboard(team);
+
             JsonReader reader = new JsonReader("./data/testWriterEmptyLeaderboard.json");
-            leaderboard = reader.read();
+            leaderboard = reader.read(cl);
             assertEquals(0, leaderboard.numProfiles());
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (NotOnLeaderboardException e) {
+            fail("Shouldn't call this");
         }
     }
 
     @Test
-    void testWriterGeneralWorkroom() {
+    void testWriterGeneralLeaderboard() {
         try {
             Leaderboard leaderboard = new Leaderboard(team);
             leaderboard.addProfile(new Profile("Alex"));
@@ -57,8 +63,11 @@ public class JsonWriterTest extends JsonTest {
             writer.write(leaderboard);
             writer.close();
 
+            ArrayList<Profile> team = new ArrayList<Profile>();
+            Leaderboard cl = new Leaderboard(team);
+
             JsonReader reader = new JsonReader("./data/testWriterGeneralLeaderboard.json");
-            leaderboard = reader.read();
+            leaderboard = reader.read(cl);
             ArrayList<Profile> profiles = leaderboard.getProfiles();
             assertEquals(2, profiles.size());
             checkProfile(leaderboard.getProfile(1), "Alex", 0, null);
@@ -66,6 +75,8 @@ public class JsonWriterTest extends JsonTest {
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (NotOnLeaderboardException e) {
+            fail("Shouldn't call this");
         }
     }
 }

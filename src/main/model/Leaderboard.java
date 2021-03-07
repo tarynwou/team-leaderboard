@@ -12,7 +12,7 @@ import java.util.Collections;
 
 // Represents the leaderboard with teammates and respective points
 public class Leaderboard implements Writable {
-    private static ArrayList<Profile> team = new ArrayList<Profile>();
+    private ArrayList<Profile> team = new ArrayList<Profile>();
 
     /*
      * EFFECTS: sets the team leaderboard given a list of profiles
@@ -45,7 +45,7 @@ public class Leaderboard implements Writable {
 
     /*
      * MODIFIES: profiles
-     * EFFECTS: removes the profile with given rank from the leaderboard
+     * EFFECTS: removes the profile with given name from the leaderboard
      */
     public void removeProfile(String name) throws NotOnLeaderboardException {
         if (doesNotContain(name) == true) {
@@ -58,6 +58,14 @@ public class Leaderboard implements Writable {
             }
         }
 
+    }
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: removes all profiles from the leaderboard
+     */
+    public void clearLeaderboard() {
+        team.clear();
     }
 
     /*

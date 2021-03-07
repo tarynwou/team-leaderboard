@@ -77,7 +77,7 @@ public class TeamLeaderboard {
         System.out.println("\te -> log entry");
         System.out.println("\tl -> show leaderboard");
         System.out.println("\tm -> deduct points");
-        System.out.println("\tn -> new leaderboard"); // --> are you sure confirmation message
+        System.out.println("\tn -> reset points"); // --> are you sure confirmation message
         System.out.println("\tr -> reload previous leaderboard");
         System.out.println("\ts -> save leaderboard");
         System.out.println("\tq -> quit");
@@ -102,7 +102,7 @@ public class TeamLeaderboard {
         } else if (command.equals("n")) {
             Leaderboard.resetLeaderboard(team);
         } else if (command.equals("r")) {
-            reloadLeaderboard();
+            reloadLeaderboard(leaderboard);
         } else if (command.equals("s")) {
             saveLeaderboard();
         } else {
@@ -245,10 +245,12 @@ public class TeamLeaderboard {
 
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void reloadLeaderboard() {
+    private void reloadLeaderboard(Leaderboard currentLeaderboard) {
         try {
-            leaderboard = jsonReader.read();
+            leaderboard = jsonReader.read(currentLeaderboard);
             System.out.println("Loaded leaderboard" + " from " + JSON_STORE);
+        } catch (NotOnLeaderboardException e) {
+            System.out.println("\nThere is no teammate with that name on the leaderboard...");
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         } finally {

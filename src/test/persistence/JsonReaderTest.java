@@ -1,7 +1,9 @@
 package persistence;
 
+import exceptions.NotOnLeaderboardException;
 import model.Leaderboard;
 import model.Profile;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -12,13 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonReaderTest extends JsonTest {
+
+
     @Test
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            Leaderboard leaderboard = reader.read();
+            ArrayList<Profile> team = new ArrayList<Profile>();
+            Leaderboard cl = new Leaderboard(team);
+            Leaderboard leaderboard = reader.read(cl);
             fail("IOException expected");
-        } catch (IOException e) {
+        } catch (IOException | NotOnLeaderboardException e) {
             // pass
         }
     }
@@ -27,10 +33,14 @@ public class JsonReaderTest extends JsonTest {
     void testReaderEmptyWorkRoom() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyLeaderboard.json");
         try {
-            Leaderboard leaderboard = reader.read();
+            ArrayList<Profile> team = new ArrayList<Profile>();
+            Leaderboard cl = new Leaderboard(team);
+            Leaderboard leaderboard = reader.read(cl);
             assertEquals(0, leaderboard.numProfiles());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (NotOnLeaderboardException e) {
+            fail("Shouldn't call this");
         }
     }
 
@@ -38,11 +48,15 @@ public class JsonReaderTest extends JsonTest {
     void testReaderGeneralWorkRoom() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralLeaderboard.json");
         try {
-            Leaderboard leaderboard = reader.read();
+            ArrayList<Profile> team = new ArrayList<Profile>();
+            Leaderboard cl = new Leaderboard(team);
+            Leaderboard leaderboard = reader.read(cl);
             ArrayList<Profile> profiles = leaderboard.getProfiles();
             assertEquals(2, profiles.size());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (NotOnLeaderboardException e) {
+            fail("Shouldn't call this");
         }
     }
 }

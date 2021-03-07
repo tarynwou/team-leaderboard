@@ -1,5 +1,6 @@
 package persistence;
 
+import exceptions.NotOnLeaderboardException;
 import model.Entry;
 import model.Leaderboard;
 import model.Profile;
@@ -25,10 +26,10 @@ public class JsonReader {
 
     // EFFECTS: reads leaderboard from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public Leaderboard read() throws IOException {
+    public Leaderboard read(Leaderboard currentLeaderboard) throws IOException, NotOnLeaderboardException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
-        return parseLeaderboard(jsonObject);
+        return parseLeaderboard(jsonObject, currentLeaderboard);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -44,13 +45,16 @@ public class JsonReader {
 
     //TODO: Fix this
 
+    // MODIFIES: this
     // EFFECTS: parses leaderboard from JSON object and returns it
-    private Leaderboard parseLeaderboard(JSONObject jsonObject) {
-        ArrayList<Profile> emptyProfileList = new ArrayList<Profile>();
-        Leaderboard leaderboard = new Leaderboard(emptyProfileList);
-        addProfiles(leaderboard, jsonObject);
-        return leaderboard;
+    private Leaderboard parseLeaderboard(JSONObject jsonObject, Leaderboard cl) {
+//        ArrayList<Profile> emptyProfileList = new ArrayList<Profile>();
+//        Leaderboard leaderboard = new Leaderboard(emptyProfileList);
+        cl.clearLeaderboard();
+        addProfiles(cl, jsonObject);
+        return cl;
     }
+
 
     // MODIFIES: leaderboard
     // EFFECTS: parses profiles from JSON object and adds them to leaderboard

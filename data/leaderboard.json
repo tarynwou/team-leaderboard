@@ -1,26 +1,12 @@
 {"profiles": [
     {
-        "entries": [{
-            "actionType": "copywriting",
-            "teammate": "a",
-            "comment": "djkfsa"
-        }],
-        "name": "a",
-        "points": 150
-    },
-    {
         "entries": [],
-        "name": "b",
+        "name": "a",
         "points": 0
     },
     {
         "entries": [],
         "name": "c",
-        "points": 0
-    },
-    {
-        "entries": [],
-        "name": "alex",
         "points": 0
     }
 ]}

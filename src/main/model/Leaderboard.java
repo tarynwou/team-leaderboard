@@ -64,7 +64,6 @@ public class Leaderboard implements Writable {
         return b;
     }
 
-
     /*
      * REQUIRES: non-empty team
      * EFFECTS: prints out the leaderboard
@@ -139,6 +138,4 @@ public class Leaderboard implements Writable {
         }
         return jsonArray;
     }
-
-
 }

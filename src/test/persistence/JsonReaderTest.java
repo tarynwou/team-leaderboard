@@ -30,7 +30,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderEmptyWorkRoom() {
+    void testReaderEmptyLeaderboard() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyLeaderboard.json");
         try {
             ArrayList<Profile> team = new ArrayList<Profile>();
@@ -45,7 +45,7 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
+    void testReaderGeneralLeaderboard() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralLeaderboard.json");
         try {
             ArrayList<Profile> team = new ArrayList<Profile>();

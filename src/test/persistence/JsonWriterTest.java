@@ -56,12 +56,21 @@ public class JsonWriterTest extends JsonTest {
     void testWriterGeneralLeaderboard() {
         try {
             Leaderboard leaderboard = new Leaderboard(team);
-            leaderboard.addProfile(new Profile("Alex"));
-            leaderboard.addProfile(new Profile("Serena"));
+            Entry testEntry = new Entry("copywriting", "good", "alex");
+            Profile alex = new Profile("Alex");
+            alex.addPoints(200);
+            alex.addToEntryList(testEntry);
+            Profile serena = new Profile("Serena");
+
+            leaderboard.addProfile(alex);
+            leaderboard.addProfile(serena);
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralLeaderboard.json");
             writer.open();
             writer.write(leaderboard);
             writer.close();
+
+            leaderboard.addProfile(alex);
+            leaderboard.addProfile(serena);
 
             ArrayList<Profile> team = new ArrayList<Profile>();
             Leaderboard cl = new Leaderboard(team);
@@ -70,7 +79,7 @@ public class JsonWriterTest extends JsonTest {
             leaderboard = reader.read(cl);
             ArrayList<Profile> profiles = leaderboard.getProfiles();
             assertEquals(2, profiles.size());
-            checkProfile(leaderboard.getProfile(1), "Alex", 0, null);
+            checkProfile(leaderboard.getProfile(1), "Alex", 350, alex.getEntries());
             checkProfile(leaderboard.getProfile(2), "Serena", 0, null);
 
         } catch (IOException e) {
@@ -78,5 +87,11 @@ public class JsonWriterTest extends JsonTest {
         } catch (NotOnLeaderboardException e) {
             fail("Shouldn't call this");
         }
+    }
+
+    @Test
+    void testToString() {
+        Entry testEntry = new Entry("copywriting", "good", "alex");
+        assertEquals("copywriting: good: alex", testEntry.toString());
     }
 }

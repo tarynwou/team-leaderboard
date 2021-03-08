@@ -1,8 +1,12 @@
 {"profiles": [
     {
-        "entries": [],
+        "entries": [{
+            "actionType": "copywriting",
+            "teammate": "alex",
+            "comment": "good"
+        }],
         "name": "Alex",
-        "points": 0
+        "points": 350
     },
     {
         "entries": [],

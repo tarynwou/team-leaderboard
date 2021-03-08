@@ -55,6 +55,8 @@ public class LeaderboardTest {
             assertEquals(0, team.size());
         } catch (ConcurrentModificationException e) {
 
+        } catch (NotOnLeaderboardException e) {
+            fail();
         }
     }
 
@@ -67,6 +69,8 @@ public class LeaderboardTest {
             assertEquals(0, team.size());
         } catch (ConcurrentModificationException e) {
 
+        } catch (NotOnLeaderboardException e) {
+            fail();
         }
     }
 
@@ -79,6 +83,31 @@ public class LeaderboardTest {
             assertEquals(anjali, testleaderboard.getProfile(2));
         } catch (NotOnLeaderboardException e) {
             fail();
+        } catch (ConcurrentModificationException e) {
+
+        }
+    }
+
+    @Test
+    public void testRemoveBottomProfileLeftover() {
+        try {
+            testleaderboard.removeProfile("Anjali");
+            assertEquals(2, team.size());
+            assertEquals(kaitlin, testleaderboard.getProfile(2));
+            assertEquals(alex, testleaderboard.getProfile(1));
+        } catch (NotOnLeaderboardException e) {
+            fail();
+        } catch (ConcurrentModificationException e) {
+
+        }
+    }
+
+    @Test
+    public void testRemoveNonExistentProfile() {
+        try {
+            testleaderboard.removeProfile("Cheryl");
+            fail();
+        } catch (NotOnLeaderboardException e) {
         } catch (ConcurrentModificationException e) {
 
         }
@@ -137,6 +166,26 @@ public class LeaderboardTest {
     }
 
     @Test
+    public void testSwapSimple() {
+        try {
+            testleaderboard.swap(2);
+            assertEquals(kaitlin, testleaderboard.getProfile(1));
+        } catch (ConcurrentModificationException e) {
+
+        }
+    }
+
+    @Test
+    public void testNoMoveUp() {
+        testleaderboard.moveUp(3);
+        assertEquals("\nLEADERBOARD" +
+                        "\n\tAlex   -   0" +
+                        "\n\tKaitlin   -   0" +
+                        "\n\tAnjali   -   0",
+                testleaderboard.showLeaderboard(team));
+    }
+
+    @Test
     public void testMoveUpToFirst() {
         anjali.addPoints(800);
         testleaderboard.moveUp(3);
@@ -169,5 +218,15 @@ public class LeaderboardTest {
                         "\n\tAlex   -   500" +
                         "\n\tKaitlin   -   0",
                 testleaderboard.showLeaderboard(team));
+    }
+
+    @Test
+    public void testDoesNotContain() {
+        assertTrue(testleaderboard.doesNotContain("cheryl"));
+    }
+
+    @Test
+    public void testDoesContain() {
+        assertFalse(testleaderboard.doesNotContain("Alex"));
     }
 }

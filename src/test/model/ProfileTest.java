@@ -90,4 +90,15 @@ public class ProfileTest {
         assertEquals(testEntry, alex.getEntry(0));
     }
 
+    @Test
+    public void testGetEntries() {
+        testEntry = new Entry("Research", "Added X to Y", "Alex");
+        alex.addToEntryList(testEntry);
+        alex.addToEntryList(testEntry);
+        alex.addToEntryList(testEntry);
+        assertEquals(3, alex.getEntries().size());
+
+
+    }
+
 }

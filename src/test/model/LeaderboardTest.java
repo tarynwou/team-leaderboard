@@ -107,7 +107,6 @@ public class LeaderboardTest {
     public void testRemoveSameProfile() {
         try {
             testleaderboard.removeProfile("Anjali");
-            testleaderboard.removeProfile("Anjali");
             assertEquals(2, team.size());
             assertEquals(kaitlin, testleaderboard.getProfile(2));
             assertEquals(alex, testleaderboard.getProfile(1));

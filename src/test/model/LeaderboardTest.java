@@ -77,6 +77,7 @@ public class LeaderboardTest {
     @Test
     public void testRemoveProfileLeftover() {
         try {
+            testleaderboard.addProfile(alex);
             testleaderboard.removeProfile("Alex");
             assertEquals(2, team.size());
             assertEquals(kaitlin, testleaderboard.getProfile(1));
@@ -91,6 +92,20 @@ public class LeaderboardTest {
     @Test
     public void testRemoveBottomProfileLeftover() {
         try {
+            testleaderboard.removeProfile("Anjali");
+            assertEquals(2, team.size());
+            assertEquals(kaitlin, testleaderboard.getProfile(2));
+            assertEquals(alex, testleaderboard.getProfile(1));
+        } catch (NotOnLeaderboardException e) {
+            fail();
+        } catch (ConcurrentModificationException e) {
+
+        }
+    }
+    @Test
+    public void testRemoveSameProfile() {
+        try {
+            testleaderboard.removeProfile("Anjali");
             testleaderboard.removeProfile("Anjali");
             assertEquals(2, team.size());
             assertEquals(kaitlin, testleaderboard.getProfile(2));

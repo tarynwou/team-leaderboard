@@ -131,8 +131,8 @@ public class Leaderboard implements Writable {
      * EFFECTS: sorts the leaderboard by number of points in each profile; the smaller the index, the more points
      */
     public void sortLeaderboard(ArrayList<Profile> team) {
-        for (Profile t : team) {
-            moveUp(team.size());
+        for (int size = team.size(); size > 0; size = size - 1) {
+            moveUp(size);
         }
     }
 

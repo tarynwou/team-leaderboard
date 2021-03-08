@@ -43,8 +43,6 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    //TODO: Fix this
-
     // MODIFIES: this
     // EFFECTS: parses leaderboard from JSON object and returns it
     private Leaderboard parseLeaderboard(JSONObject jsonObject, Leaderboard cl) {
@@ -54,7 +52,6 @@ public class JsonReader {
         addProfiles(cl, jsonObject);
         return cl;
     }
-
 
     // MODIFIES: leaderboard
     // EFFECTS: parses profiles from JSON object and adds them to leaderboard
@@ -77,6 +74,8 @@ public class JsonReader {
         leaderboard.addProfile(profile);
     }
 
+    // MODIFIES: profile
+    // EFFECTS: parses entries from JSON object and adds them to the profile
     private void addEntries(Profile profile, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("entries");
         for (Object json : jsonArray) {
@@ -85,6 +84,8 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: profile
+    // EFFECTS: parses an entry from JSON object and adds it to the profile
     private void addEntry(Profile profile, JSONObject jsonObject) {
         String actionType = jsonObject.getString("actionType");
         String comment = jsonObject.getString("comment");

@@ -111,8 +111,8 @@ public class TeamLeaderboard {
     }
 
     /*
-     * REQUIRES: person is on the list
-     * EFFECTS: selects a person
+     * REQUIRES: action is on the list
+     * EFFECTS: selects an action
      */
     private String selectAction() {
         String selection = "";  // force entry into loop
@@ -152,6 +152,7 @@ public class TeamLeaderboard {
         Profile newTeammate = new Profile(name);
         leaderboard.addProfile(newTeammate);
         System.out.println("\nYou added " + newTeammate.getName() + " to the team!");
+        leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
     }
 
@@ -161,7 +162,6 @@ public class TeamLeaderboard {
      */
     private void removeTeammate() {
         System.out.println("Who would you like to remove from the team?");
-        //User can input the name of the teammate they want to remove
         String name = input.next();
         name += input.nextLine();
 
@@ -172,6 +172,7 @@ public class TeamLeaderboard {
         } catch (NotOnLeaderboardException e) {
             System.out.println("\nThere is no teammate with that name on the leaderboard...");
         }
+        leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
     }
 
@@ -196,7 +197,7 @@ public class TeamLeaderboard {
                 teammate.addToEntryList(entry);
             }
         }
-
+        leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
 
     }
@@ -218,6 +219,7 @@ public class TeamLeaderboard {
                 teammate.removePoints(amount);
             }
         }
+        leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
     }
 
@@ -232,6 +234,7 @@ public class TeamLeaderboard {
     // EFFECTS: saves the workroom to file
     private void saveLeaderboard() {
         try {
+            leaderboard.sortLeaderboard(team);
             jsonWriter.open();
             jsonWriter.write(leaderboard);
             jsonWriter.close();

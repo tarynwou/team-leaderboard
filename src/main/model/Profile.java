@@ -34,6 +34,9 @@ public class Profile implements Writable {
         return entries.get(number);
     }
 
+    /*
+     * EFFECTS: returns a profile's list of entries
+     */
     public ArrayList<Entry> getEntries() {
         return entries;
     }

@@ -133,6 +133,7 @@ public class Leaderboard implements Writable {
     public void sortLeaderboard(ArrayList<Profile> team) {
         for (int size = team.size(); size > 0; size = size - 1) {
             moveUp(size);
+            moveUp(team.size());
         }
     }
 

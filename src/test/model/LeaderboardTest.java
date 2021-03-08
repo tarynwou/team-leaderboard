@@ -1,5 +1,6 @@
 package model;
 
+import com.sun.tools.corba.se.idl.constExpr.Not;
 import exceptions.NotOnLeaderboardException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -232,6 +233,35 @@ public class LeaderboardTest {
                         "\n\tAnjali   -   800" +
                         "\n\tAlex   -   500" +
                         "\n\tKaitlin   -   0",
+                testleaderboard.showLeaderboard(team));
+    }
+
+    @Test
+    public void testSortOneProfile() throws NotOnLeaderboardException {
+        try {
+            testleaderboard.removeProfile("Alex");
+            testleaderboard.removeProfile("Kaitlin");
+            testleaderboard.sortLeaderboard(team);
+            assertEquals("\nLEADERBOARD" +
+                            "\n\tAnjali   -   0",
+                    testleaderboard.showLeaderboard(team));
+        } catch (ConcurrentModificationException e) {
+
+        } catch (NotOnLeaderboardException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testSortLeaderboardThree() {
+        alex.addPoints(500);
+        anjali.addPoints(1000);
+        kaitlin.addPoints(900);
+        testleaderboard.sortLeaderboard(team);
+        assertEquals("\nLEADERBOARD" +
+                        "\n\tAnjali   -   1000" +
+                        "\n\tKaitlin   -   900" +
+                        "\n\tAlex   -   500" ,
                 testleaderboard.showLeaderboard(team));
     }
 

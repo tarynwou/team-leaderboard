@@ -1,6 +1,5 @@
 package model;
 
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import exceptions.NotOnLeaderboardException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

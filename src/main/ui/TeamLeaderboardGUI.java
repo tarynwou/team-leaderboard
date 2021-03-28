@@ -21,7 +21,9 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
 
 
-// CREDITS: LabelChanger and TextInputDemo
+// CREDITS: LabelChanger example from CPSC 210 and TextInputDemo from
+// https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/
+// examples/components/TextInputDemoProject/src/components/TextInputDemo.java
 
 // Creates the graphical user interfaces for Team Leaderboard
 public class TeamLeaderboardGUI extends JFrame implements ActionListener {

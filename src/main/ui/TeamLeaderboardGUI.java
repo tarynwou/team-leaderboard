@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.NotOnLeaderboardException;
 import model.Leaderboard;
 import model.Profile;
 
@@ -9,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 
 // CREDITS: LabelChanger and TextInputDemo
@@ -107,6 +109,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         sb.append("<html><p align=center>");
         sb.append("TEAM LEADERBOARD");
         sb.append("<br>");
+        sb.append("<br>");
         for (Profile p: team) {
             sb.append(p.getName()); // get name
             sb.append(" - ");
@@ -201,6 +204,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
             System.exit(0);
         } else if (e.getActionCommand().equals("add")) {
             addTeammate();
+        } else if (e.getActionCommand().equals("remove")) {
+            removeTeammate();
         }
         updateDisplay();
     }
@@ -209,6 +214,18 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         String name = nameField.getText();
         Profile newTeammate = new Profile(name);
         leaderboard.addProfile(newTeammate);
+        leaderboard.sortLeaderboard(team);
+        nameField.setText("");
+    }
+
+    private void removeTeammate() {
+        String name = nameField.getText();
+
+        try {
+            leaderboard.removeProfile(name);
+        } catch (ConcurrentModificationException | NotOnLeaderboardException e) {
+            //do nothing
+        }
         leaderboard.sortLeaderboard(team);
         nameField.setText("");
     }

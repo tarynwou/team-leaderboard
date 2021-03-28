@@ -32,32 +32,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
 
-        JPanel leftPanel = new JPanel();
-        JPanel middlePanel = new JPanel();
-        JPanel rightPanel = new JPanel();
+        setUp();
 
-        leftPanel.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
-//        leftPanel.setPreferredSize(new Dimension(SCREEN_WIDTH / 4, SCREEN_HEIGHT));
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
-        leftPanel.add(createLeftButtons());
-        leftPanel.setBackground(Color.BLUE);
-
-        middlePanel.setBounds(SCREEN_WIDTH / 4, 0, SCREEN_WIDTH * 3 / 8, SCREEN_HEIGHT);
-        middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
-        middlePanel.setBackground(Color.CYAN);
-
-        rightPanel.setBounds(SCREEN_WIDTH * 5 / 8, 0, SCREEN_WIDTH * 3 / 8, SCREEN_HEIGHT);
-        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-//        rightPanel.add(createLeftButtons());
-        rightPanel.setBackground(Color.GREEN);
-
-        add(leftPanel);
-        add(middlePanel);
-        add(rightPanel);
-
-
-
-        setLayout(new FlowLayout());
         JButton btn = new JButton("Add");
         btn.setActionCommand("myButton");
         btn.addActionListener(this); // Sets "this" object as an action listener for btn
@@ -74,6 +50,30 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
+    }
+
+    private void setUp() {
+        JPanel leftPanel = new JPanel();
+        JPanel middlePanel = new JPanel();
+        JPanel rightPanel = new JPanel();
+
+        leftPanel.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+        leftPanel.add(createLeftButtons());
+        leftPanel.setBackground(Color.BLUE);
+
+        middlePanel.setBounds(SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
+        middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
+        middlePanel.setBackground(Color.CYAN);
+
+        rightPanel.setBounds(SCREEN_WIDTH * 3 / 4, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+//        rightPanel.add(setUpRightPanel());
+        rightPanel.setBackground(Color.GREEN);
+
+        add(leftPanel);
+        add(middlePanel);
+        add(rightPanel);
     }
 
     protected JComponent createLeftButtons() {

@@ -33,20 +33,28 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
 
         JPanel leftPanel = new JPanel();
-//            public Dimension getMaximumSize() {
-//                Dimension pref = getPreferredSize();
-//                return new Dimension(Integer.MAX_VALUE,
-//                        pref.height);
-//            }
-//        };
-        JPanel middlePanel;
-        JPanel rightPanel;
+        JPanel middlePanel = new JPanel();
+        JPanel rightPanel = new JPanel();
 
-        leftPanel.setPreferredSize(new Dimension(SCREEN_WIDTH / 4, SCREEN_HEIGHT));
+        leftPanel.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
+//        leftPanel.setPreferredSize(new Dimension(SCREEN_WIDTH / 4, SCREEN_HEIGHT));
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
         leftPanel.add(createLeftButtons());
+        leftPanel.setBackground(Color.BLUE);
+
+        middlePanel.setBounds(SCREEN_WIDTH / 4, 0, SCREEN_WIDTH * 3 / 8, SCREEN_HEIGHT);
+        middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
+        middlePanel.setBackground(Color.CYAN);
+
+        rightPanel.setBounds(SCREEN_WIDTH * 5 / 8, 0, SCREEN_WIDTH * 3 / 8, SCREEN_HEIGHT);
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+//        rightPanel.add(createLeftButtons());
+        rightPanel.setBackground(Color.GREEN);
 
         add(leftPanel);
+        add(middlePanel);
+        add(rightPanel);
+
 
 
         setLayout(new FlowLayout());
@@ -69,33 +77,30 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     }
 
     protected JComponent createLeftButtons() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JButton button = new JButton("Quit");
-        button.addActionListener(this);
-        button.setActionCommand("quit");
-        panel.add(button);
+        addButton(panel, "Quit", "quit");
 
-        button = new JButton("Save");
-        button.addActionListener(this);
-        button.setActionCommand("save");
-        panel.add(button);
+        addButton(panel, "Save", "save");
 
-        button = new JButton("Load");
-        button.addActionListener(this);
-        button.setActionCommand("load");
-        panel.add(button);
+        addButton(panel, "Load", "load");
 
-        button = new JButton("Reset");
-        button.addActionListener(this);
-        button.setActionCommand("reset");
-        panel.add(button);
+        addButton(panel, "Reset", "reset");
 
         //Match the SpringLayout's gap, subtracting 5 to make
         //up for the default gap FlowLayout provides.
         panel.setBorder(BorderFactory.createEmptyBorder(0, 0,
                 GAP - 5, GAP - 5));
         return panel;
+    }
+
+    private void addButton(JPanel panel, String name, String command) {
+        JButton button;
+        button = new JButton(name);
+        button.addActionListener(this);
+        button.setActionCommand(command);
+        panel.add(button);
     }
 
 

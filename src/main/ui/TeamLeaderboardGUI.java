@@ -6,6 +6,7 @@ import model.Profile;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -332,10 +334,12 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
             jsonWriter.open();
             jsonWriter.write(leaderboard);
             jsonWriter.close();
-        } catch (FileNotFoundException e) {
+            playSaveSound();
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             // do nothing
         }
     }
+
 
     // MODIFIES: this
     // EFFECTS: loads leaderboard from file
@@ -345,6 +349,18 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         } catch (NotOnLeaderboardException | IOException e) {
             // do nothing
         }
+    }
+
+    private void playSaveSound() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
+        File audioFile = new File("./sounds/text_sound.mp3");
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+        AudioFormat format = audioStream.getFormat();
+        DataLine.Info info = new DataLine.Info(Clip.class, format);
+        Clip audioClip = (Clip) AudioSystem.getLine(info);
+        audioClip.open(audioStream);
+        audioClip.start();
+        audioClip.close();
+        audioStream.close();
     }
 
     public static void main(String[] args) {

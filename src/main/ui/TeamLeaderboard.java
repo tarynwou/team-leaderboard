@@ -199,7 +199,6 @@ public class TeamLeaderboard {
         }
         leaderboard.sortLeaderboard(team);
         System.out.println(leaderboard.showLeaderboard(team));
-
     }
 
     /*

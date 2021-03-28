@@ -1,12 +1,12 @@
 package ui;
 
 import exceptions.NotOnLeaderboardException;
+import model.Entry;
 import model.Leaderboard;
 import model.Profile;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -15,10 +15,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioSystem;
 
 
 // CREDITS: LabelChanger and TextInputDemo
@@ -30,6 +32,10 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     private final JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
     private final JsonReader jsonReader = new JsonReader(JSON_STORE);
 
+    // Sounds
+    private static String SAVE_SOUND = "./data/text_sounds.wav";
+    private static String LOAD_SOUND = "./data/super_mario_mushroom.wav";
+
     //TODO: redo this lol + add documentation
     private JLabel label;
     private JTextField field;
@@ -40,14 +46,15 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     // Fields
     JTextField nameField = new JTextField();
     JTextField commentField = new JTextField();
-    JTextField teammateField;
+    JTextField teammateField = new JTextField();
     JSpinner actionSpinner;
 
     // Labels
     JLabel nameLabel;
-    JLabel actionLabel;
-    JLabel commentLabel;
-    JLabel teammateLabel;
+    //TODO: review and delete these
+//    JLabel actionLabel;
+//    JLabel commentLabel;
+//    JLabel teammateLabel;
     JLabel display;
 
     private static int GAP = 10;
@@ -71,8 +78,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         // You could also set a different object, if you wanted
         // a different object to respond to the button click
         label = new JLabel("flag");
-        teammateField = new JTextField(5);
-        add(teammateField);
+        field = new JTextField(5);
+        add(field);
         add(btn);
         add(label);
         pack();
@@ -157,7 +164,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         entryPanel.setLocation(0, SCREEN_HEIGHT / 2);
         entryPanel.setBackground(Color.DARK_GRAY);
         entryPanel.add(entryTitle);
-        createEntryFields();
+        entryPanel.add(createEntryFields());
+        addButton(entryPanel, "Log Entry", "log");
     }
 
     private void setUpTeammatePanel(JPanel teammatePanel) {
@@ -170,15 +178,9 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         nameField.setColumns(10);
         teammatePanel.add(nameLabel);
         teammatePanel.add(nameField);
+        //TODO: Add button panel
         addButton(teammatePanel, "Add", "add");
         addButton(teammatePanel, "Remove", "remove");
-    }
-
-    public void addTextField(JPanel panel, JLabel label, JTextField field, String text) {
-        label = new JLabel(text);
-        field.setColumns(10);
-        panel.add(label);
-        panel.add(field);
     }
 
     protected JComponent createEntryFields() {
@@ -211,16 +213,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
             labels[i].setLabelFor(fields[i]);
             panel.add(labels[i]);
             panel.add(fields[i]);
-
-            //Add listeners to each field.
-//            JTextField tf = null;
-//            if (fields[i] instanceof JSpinner) {
-//                tf = getTextField((JSpinner) fields[i]);
-//            } else {
-//                tf = (JTextField) fields[i];
-//            }
-//            tf.addActionListener(this);
-//            tf.addFocusListener(this);
         }
     }
 
@@ -244,7 +236,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
                 "Copywriting (150pts)",
                 "Marketing (100pts)",
                 "Research (100pts)",
-                "something good (50pts)" // TODO: Change to "Bonus"
+                "Bonus (50pts)"
         };
         return stateActions;
     }
@@ -306,8 +298,26 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
             load(leaderboard);
         } else if (e.getActionCommand().equals("reset")) {
             Leaderboard.resetLeaderboard(team);
+        } else if (e.getActionCommand().equals("log")) {
+            logEntry();
         }
         updateDisplay();
+    }
+
+    private void logEntry() {
+        String actionType = (String)actionSpinner.getValue();
+        String comment = commentField.getText();
+        String name = teammateField.getText();
+
+        Entry entry = new Entry(actionType, comment, name);
+        for (Profile teammate : team) {
+            if (teammate.getName().contains(name)) {
+                teammate.addToEntryList(entry);
+            }
+        }
+        leaderboard.sortLeaderboard(team);
+//        commentField.setText("");
+//        teammateField.setText("");
     }
 
     private void addTeammate() {
@@ -338,32 +348,44 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
             jsonWriter.write(leaderboard);
             jsonWriter.close();
             playSaveSound();
-        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+        } catch (IOException e) {
             // do nothing
         }
     }
-
 
     // MODIFIES: this
     // EFFECTS: loads leaderboard from file
     private void load(Leaderboard currentLeaderboard) {
         try {
             leaderboard = jsonReader.read(currentLeaderboard);
+            playLoadSound();
         } catch (NotOnLeaderboardException | IOException e) {
             // do nothing
         }
     }
 
-    private void playSaveSound() throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-        File audioFile = new File("./sounds/text_sound.mp3");
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-        AudioFormat format = audioStream.getFormat();
-        DataLine.Info info = new DataLine.Info(Clip.class, format);
-        Clip audioClip = (Clip) AudioSystem.getLine(info);
-        audioClip.open(audioStream);
-        audioClip.start();
-        audioClip.close();
-        audioStream.close();
+    // Modelled after the example in http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
+    private void playSaveSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SAVE_SOUND).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+        }
+    }
+
+    // Modelled after the example in http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
+    private void playLoadSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(LOAD_SOUND).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception ex) {
+            System.out.println("Error with playing sound.");
+        }
     }
 
     public static void main(String[] args) {

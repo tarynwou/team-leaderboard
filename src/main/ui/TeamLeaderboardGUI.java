@@ -27,6 +27,7 @@ import javax.sound.sampled.AudioSystem;
 
 // Creates the graphical user interfaces for Team Leaderboard
 public class TeamLeaderboardGUI extends JFrame implements ActionListener {
+    // FIELDS
     // Save and reload fields
     private static final String JSON_STORE = "./data/leaderboard.json";
     private final JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
@@ -36,9 +37,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     private static String SAVE_SOUND = "./data/text_sounds.wav";
     private static String LOAD_SOUND = "./data/super_mario_mushroom.wav";
 
-    //TODO: redo this lol + add documentation
-    private JLabel label;
-    private JTextField field;
+    //TODO: add documentation
 
     private ArrayList<Profile> team = new ArrayList<Profile>();
     private Leaderboard leaderboard = new Leaderboard(team);
@@ -53,12 +52,13 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     JLabel nameLabel;
     JLabel display;
 
+    // Constants
     private static int GAP = 10;
     private static int SCREEN_WIDTH = 800;
     private static int SCREEN_HEIGHT = 400;
 
 
-    //TODO: Clean up constructor
+    // EFFECTS: Constructs TeamLeaderboardGUI
     public TeamLeaderboardGUI() {
         super("Team Leaderboard");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -67,24 +67,15 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
 
         setUp();
 
-        JButton btn = new JButton("Add");
-        btn.setActionCommand("myButton");
-        btn.addActionListener(this); // Sets "this" object as an action listener for btn
-        // so that when the btn is clicked,
-        // this.actionPerformed(ActionEvent e) will be called.
-        // You could also set a different object, if you wanted
-        // a different object to respond to the button click
-        label = new JLabel("flag");
-        field = new JTextField(5);
-        add(field);
+        JButton btn = new JButton("");
         add(btn);
-        add(label);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
     }
 
+    // EFFECTS:
     private void setUp() {
         JPanel leftPanel = new JPanel();
         JPanel middlePanel = new JPanel();
@@ -96,19 +87,18 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
 
         middlePanel.setBounds(SCREEN_WIDTH / 8, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
-        middlePanel.setBackground(Color.CYAN);
         middlePanel.add(setUpMiddlePanel());
 
         rightPanel.setBounds(SCREEN_WIDTH * 5 / 8, 0, SCREEN_WIDTH * 3 / 8, SCREEN_HEIGHT);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
         rightPanel.add(setUpRightPanel());
-        rightPanel.setBackground(Color.GREEN);
 
         add(leftPanel);
         add(middlePanel);
         add(rightPanel);
     }
 
+    // EFFECTS:
     private Component setUpMiddlePanel() {
         JPanel middlePanelSetup = new JPanel();
         display = new JLabel();
@@ -117,10 +107,12 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return middlePanelSetup;
     }
 
+    // EFFECTS:
     private void updateDisplay() {
         display.setText(formatLeaderboard());
     }
 
+    // EFFECTS:
     private String formatLeaderboard() {
         StringBuilder sb = new StringBuilder();
         sb.append("<html><p align=center>");
@@ -138,6 +130,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return sb.toString();
     }
 
+    // EFFECTS:
     private Component setUpRightPanel() {
         JPanel rightPanelSetup = new JPanel();
         JPanel teammatePanel = new JPanel();
@@ -152,6 +145,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return rightPanelSetup;
     }
 
+    // EFFECTS:
     private void setUpEntryPanel(JPanel entryPanel) {
         JLabel entryTitle = new JLabel("LOG ENTRY");
         entryPanel.setLocation(0, SCREEN_HEIGHT / 2);
@@ -160,6 +154,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         addButton(entryPanel, "Log Entry", "log");
     }
 
+    // EFFECTS:
     private void setUpTeammatePanel(JPanel teammatePanel) {
         JLabel teammatesTitle = new JLabel(formatTeammateTitle());
         JPanel namePanel = new JPanel();
@@ -178,6 +173,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         addButton(buttonPanel, "Remove", "remove");
     }
 
+    // EFFECTS:
     private String formatTeammateTitle() {
         StringBuilder sb = new StringBuilder();
         sb.append("<html><p align=center>");
@@ -188,6 +184,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return sb.toString();
     }
 
+    // EFFECTS:
     protected JComponent createEntryFields() {
         JPanel panel = new JPanel(new SpringLayout());
 
@@ -210,6 +207,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return panel;
     }
 
+    // EFFECTS:
     // Associate label/field pairs, add everything, and lay it out.
     private void pairLabelsAndFields(JPanel panel, String[] labelStrings, JLabel[] labels, JComponent[] fields) {
         for (int i = 0; i < labelStrings.length; i++) {
@@ -221,6 +219,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS:
     //Create the text field and set it up.
     private void initializeEntryFields(JComponent[] fields, int fieldNum) {
         String[] actions = getActions();
@@ -236,6 +235,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         fields[fieldNum++] = teammateField;
     }
 
+    // EFFECTS:
     private String[] getActions() {
         String[] stateActions = {
                 "Copywriting (150pts)",
@@ -246,6 +246,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return stateActions;
     }
 
+    // EFFECTS:
     protected JComponent createLeftButtons() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -264,6 +265,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         return panel;
     }
 
+    // EFFECTS:
     private void addButton(JPanel panel, String name, String command) {
         JButton button;
         button = new JButton(name);
@@ -272,7 +274,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         panel.add(button);
     }
 
-
+    // EFFECTS:
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("quit")) {
@@ -293,6 +295,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         updateDisplay();
     }
 
+    // EFFECTS:
     private void logEntry() {
         String actionType = (String)actionSpinner.getValue();
         String comment = commentField.getText();
@@ -318,6 +321,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         teammateField.setText("");
     }
 
+    // EFFECTS:
     private void addTeammate() {
         String name = nameField.getText();
         Profile newTeammate = new Profile(name);
@@ -326,6 +330,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         nameField.setText("");
     }
 
+    // EFFECTS:
     private void removeTeammate() {
         String name = nameField.getText();
 

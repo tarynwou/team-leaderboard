@@ -18,13 +18,17 @@
         "points": 100
     },
     {
-        "entries": [],
-        "name": "Taryn",
-        "points": 0
+        "entries": [{
+            "actionType": "Bonus (50pts)",
+            "teammate": "Kaitlin",
+            "comment": ""
+        }],
+        "name": "Kaitlin",
+        "points": 50
     },
     {
         "entries": [],
-        "name": "Kaitlin",
+        "name": "Taryn",
         "points": 0
     }
 ]}

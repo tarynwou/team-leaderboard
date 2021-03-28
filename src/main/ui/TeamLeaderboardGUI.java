@@ -26,7 +26,7 @@ import javax.sound.sampled.AudioSystem;
 // CREDITS: LabelChanger and TextInputDemo
 
 // Creates the graphical user interfaces for Team Leaderboard
-public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusListener {
+public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     // Save and reload fields
     private static final String JSON_STORE = "./data/leaderboard.json";
     private final JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
@@ -51,10 +51,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
 
     // Labels
     JLabel nameLabel;
-    //TODO: review and delete these
-//    JLabel actionLabel;
-//    JLabel commentLabel;
-//    JLabel teammateLabel;
     JLabel display;
 
     private static int GAP = 10;
@@ -67,7 +63,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         super("Team Leaderboard");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        ((JPanel) getContentPane()).setBorder(new EmptyBorder(10, 10, 10, 10));
 
         setUp();
 
@@ -150,9 +146,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         rightPanelSetup.setLayout(new GridLayout(2, 1));
         rightPanelSetup.add(teammatePanel);
         rightPanelSetup.add(entryPanel);
-//        rightPanelSetup.setBackground(Color.PINK);
-
-//        teammatePanel.setLayout(new BoxLayout(teammatePanel, BoxLayout.Y_AXIS));
         setUpTeammatePanel(teammatePanel);
         setUpEntryPanel(entryPanel);
 
@@ -162,7 +155,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     private void setUpEntryPanel(JPanel entryPanel) {
         JLabel entryTitle = new JLabel("LOG ENTRY");
         entryPanel.setLocation(0, SCREEN_HEIGHT / 2);
-//        entryPanel.setBackground(Color.DARK_GRAY);
         entryPanel.add(entryTitle);
         entryPanel.add(createEntryFields());
         addButton(entryPanel, "Log Entry", "log");
@@ -173,9 +165,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         JPanel namePanel = new JPanel();
         JPanel buttonPanel = new JPanel();
 
-//        teammatePanel.setLayout(new GridLayout(3, 1));
-
-//        teammatePanel.setBackground(Color.ORANGE);
         teammatePanel.add(teammatesTitle);
         teammatePanel.add(namePanel);
         teammatePanel.add(buttonPanel);
@@ -374,6 +363,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     }
 
     // Modelled after the example in http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
+    // EFFECTS: plays the saving sound
     private void playSaveSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(SAVE_SOUND).getAbsoluteFile());
@@ -386,6 +376,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     }
 
     // Modelled after the example in http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
+    // EFFECTS: plays the loading sound
     private void playLoadSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(LOAD_SOUND).getAbsoluteFile());
@@ -397,33 +388,10 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         }
     }
 
+    // EFFECTS: Runs the GUI
     public static void main(String[] args) {
         new TeamLeaderboardGUI();
     }
 
-    @Override
-    public void focusGained(FocusEvent e) {
-        Component c = e.getComponent();
-        if (c instanceof JFormattedTextField) {
-            selectItLater(c);
-        } else if (c instanceof JTextField) {
-            ((JTextField)c).selectAll();
-        }
-    }
 
-    private void selectItLater(Component c) {
-        if (c instanceof JFormattedTextField) {
-            final JFormattedTextField ftf = (JFormattedTextField)c;
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    ftf.selectAll();
-                }
-            });
-        }
-    }
-
-    @Override
-    public void focusLost(FocusEvent e) {
-        // do nothing
-    }
 }

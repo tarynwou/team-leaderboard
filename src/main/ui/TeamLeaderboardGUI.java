@@ -62,6 +62,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     private static int SCREEN_HEIGHT = 400;
 
 
+    //TODO: Clean up constructor
     public TeamLeaderboardGUI() {
         super("Team Leaderboard");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -96,7 +97,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         leftPanel.setBounds(0, 0, SCREEN_WIDTH / 8, SCREEN_HEIGHT);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         leftPanel.add(createLeftButtons());
-//        leftPanel.setBackground(Color.BLUE);
 
         middlePanel.setBounds(SCREEN_WIDTH / 8, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
@@ -142,7 +142,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         return sb.toString();
     }
 
-
     private Component setUpRightPanel() {
         JPanel rightPanelSetup = new JPanel();
         JPanel teammatePanel = new JPanel();
@@ -151,8 +150,9 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         rightPanelSetup.setLayout(new GridLayout(2, 1));
         rightPanelSetup.add(teammatePanel);
         rightPanelSetup.add(entryPanel);
-        rightPanelSetup.setBackground(Color.PINK);
+//        rightPanelSetup.setBackground(Color.PINK);
 
+//        teammatePanel.setLayout(new BoxLayout(teammatePanel, BoxLayout.Y_AXIS));
         setUpTeammatePanel(teammatePanel);
         setUpEntryPanel(entryPanel);
 
@@ -162,25 +162,41 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     private void setUpEntryPanel(JPanel entryPanel) {
         JLabel entryTitle = new JLabel("LOG ENTRY");
         entryPanel.setLocation(0, SCREEN_HEIGHT / 2);
-        entryPanel.setBackground(Color.DARK_GRAY);
+//        entryPanel.setBackground(Color.DARK_GRAY);
         entryPanel.add(entryTitle);
         entryPanel.add(createEntryFields());
         addButton(entryPanel, "Log Entry", "log");
     }
 
     private void setUpTeammatePanel(JPanel teammatePanel) {
-        JLabel teammatesTitle = new JLabel("TEAMMATES");
-        teammatePanel.setLayout(new BoxLayout(teammatePanel, BoxLayout.Y_AXIS));
-        teammatePanel.setBackground(Color.ORANGE);
+        JLabel teammatesTitle = new JLabel(formatTeammateTitle());
+        JPanel namePanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+
+//        teammatePanel.setLayout(new GridLayout(3, 1));
+
+//        teammatePanel.setBackground(Color.ORANGE);
         teammatePanel.add(teammatesTitle);
+        teammatePanel.add(namePanel);
+        teammatePanel.add(buttonPanel);
 
         nameLabel = new JLabel("Name: ");
         nameField.setColumns(10);
-        teammatePanel.add(nameLabel);
-        teammatePanel.add(nameField);
-        //TODO: Add button panel
-        addButton(teammatePanel, "Add", "add");
-        addButton(teammatePanel, "Remove", "remove");
+        namePanel.add(nameLabel);
+        namePanel.add(nameField);
+
+        addButton(buttonPanel, "Add", "add");
+        addButton(buttonPanel, "Remove", "remove");
+    }
+
+    private String formatTeammateTitle() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html><p align=center>");
+        sb.append("<br>");
+        sb.append("MANAGE TEAMMATES");
+        sb.append("<br>");
+        sb.append("</p></html>");
+        return sb.toString();
     }
 
     protected JComponent createEntryFields() {
@@ -205,8 +221,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         return panel;
     }
 
+    // Associate label/field pairs, add everything, and lay it out.
     private void pairLabelsAndFields(JPanel panel, String[] labelStrings, JLabel[] labels, JComponent[] fields) {
-        // Associate label/field pairs, add everything, and lay it out.
         for (int i = 0; i < labelStrings.length; i++) {
             labels[i] = new JLabel(labelStrings[i],
                     JLabel.TRAILING);
@@ -216,8 +232,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         }
     }
 
+    //Create the text field and set it up.
     private void initializeEntryFields(JComponent[] fields, int fieldNum) {
-        //Create the text field and set it up.
         String[] actions = getActions();
         actionSpinner = new JSpinner(new SpinnerListModel(actions));
         fields[fieldNum++] = actionSpinner;
@@ -241,19 +257,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         return stateActions;
     }
 
-    //TODO: review this and delete
-    public JFormattedTextField getTextField(JSpinner spinner) {
-        JComponent editor = spinner.getEditor();
-        if (editor instanceof JSpinner.DefaultEditor) {
-            return ((JSpinner.DefaultEditor)editor).getTextField();
-        } else {
-            System.err.println("Unexpected editor type: "
-                    + spinner.getEditor().getClass()
-                    + " isn't a descendant of DefaultEditor");
-            return null;
-        }
-    }
-
     protected JComponent createLeftButtons() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -266,8 +269,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
 
         addButton(panel, "Reset", "reset");
 
-        //Match the SpringLayout's gap, subtracting 5 to make
-        //up for the default gap FlowLayout provides.
+        //Match the SpringLayout's gap, subtracting 5 to make up for the default gap FlowLayout provides.
         panel.setBorder(BorderFactory.createEmptyBorder(0, 0,
                 GAP - 5, GAP - 5));
         return panel;
@@ -284,9 +286,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("myButton")) {
-            label.setText(teammateField.getText());
-        } else if (e.getActionCommand().equals("quit")) {
+        if (e.getActionCommand().equals("quit")) {
             System.exit(0);
         } else if (e.getActionCommand().equals("add")) {
             addTeammate();

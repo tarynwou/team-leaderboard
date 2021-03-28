@@ -1,32 +1,30 @@
 {"profiles": [
     {
-        "entries": [
-            {
-                "actionType": "Copywriting (150pts)",
-                "teammate": "Kait",
-                "comment": "Great"
-            },
-            {
-                "actionType": "Research (100pts)",
-                "teammate": "Kait",
-                "comment": "Good"
-            }
-        ],
-        "name": "Kait",
-        "points": 250
-    },
-    {
         "entries": [{
             "actionType": "Copywriting (150pts)",
-            "teammate": "Taryn",
-            "comment": "Good"
+            "teammate": "Serena",
+            "comment": "Great!"
         }],
-        "name": "Taryn",
+        "name": "Serena",
         "points": 150
     },
     {
-        "entries": [],
+        "entries": [{
+            "actionType": "Research (100pts)",
+            "teammate": "Alex",
+            "comment": "Good work!"
+        }],
         "name": "Alex",
+        "points": 100
+    },
+    {
+        "entries": [],
+        "name": "Taryn",
+        "points": 0
+    },
+    {
+        "entries": [],
+        "name": "Kaitlin",
         "points": 0
     }
 ]}

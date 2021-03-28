@@ -1,22 +1,22 @@
 {"profiles": [
     {
         "entries": [],
+        "name": "Dad",
+        "points": 0
+    },
+    {
+        "entries": [],
         "name": "Taryn",
         "points": 0
     },
     {
         "entries": [],
+        "name": "Mom",
+        "points": 0
+    },
+    {
+        "entries": [],
         "name": "Trevor",
-        "points": 0
-    },
-    {
-        "entries": [],
-        "name": "Alex",
-        "points": 0
-    },
-    {
-        "entries": [],
-        "name": "Daniel",
         "points": 0
     }
 ]}

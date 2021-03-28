@@ -231,7 +231,7 @@ public class TeamLeaderboard {
         System.out.println(leaderboard.showLeaderboard(team));
     }
 
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: saves the leaderboard to file
     private void saveLeaderboard() {
         try {
             leaderboard.sortLeaderboard(team);

@@ -1,25 +1,22 @@
 {"profiles": [
     {
-        "entries": [{
-            "actionType": "copywriting",
-            "teammate": "Taryn",
-            "comment": "She was fantastic!!!! Loved it!!"
-        }],
+        "entries": [],
         "name": "Taryn",
-        "points": 150
-    },
-    {
-        "entries": [{
-            "actionType": "marketing",
-            "teammate": "Alex",
-            "comment": "she was okay..."
-        }],
-        "name": "Alex",
-        "points": 100
+        "points": 0
     },
     {
         "entries": [],
-        "name": "Emily",
+        "name": "Trevor",
+        "points": 0
+    },
+    {
+        "entries": [],
+        "name": "Alex",
+        "points": 0
+    },
+    {
+        "entries": [],
+        "name": "Daniel",
         "points": 0
     }
 ]}

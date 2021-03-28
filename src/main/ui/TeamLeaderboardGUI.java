@@ -3,12 +3,16 @@ package ui;
 import exceptions.NotOnLeaderboardException;
 import model.Leaderboard;
 import model.Profile;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
@@ -17,6 +21,11 @@ import java.util.ConcurrentModificationException;
 
 // Creates the graphical user interfaces for Team Leaderboard
 public class TeamLeaderboardGUI extends JFrame implements ActionListener {
+    // Save and reload fields
+    private static final String JSON_STORE = "./data/leaderboard.json";
+    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+    private JsonReader jsonReader = new JsonReader(JSON_STORE);
+
     //TODO: redo this lol + add documentation
     private JLabel label;
     private JTextField field;
@@ -24,16 +33,17 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     private ArrayList<Profile> team = new ArrayList<Profile>();
     private Leaderboard leaderboard = new Leaderboard(team);
 
+    // Fields
     JTextField nameField = new JTextField();
     JTextField commentField = new JTextField();
     JTextField teammateField = new JTextField();
     JSpinner actionField;
 
+    // Labels
     JLabel nameLabel;
     JLabel actionLabel;
     JLabel commentLabel;
     JLabel teammateLabel;
-
     JLabel display;
 
     private static int GAP = 10;
@@ -107,6 +117,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     private String formatLeaderboard() {
         StringBuffer sb = new StringBuffer();
         sb.append("<html><p align=center>");
+        sb.append("<br>");
         sb.append("TEAM LEADERBOARD");
         sb.append("<br>");
         sb.append("<br>");
@@ -206,6 +217,12 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
             addTeammate();
         } else if (e.getActionCommand().equals("remove")) {
             removeTeammate();
+        } else if (e.getActionCommand().equals("save")) {
+            save();
+        } else if (e.getActionCommand().equals("load")) {
+            load(leaderboard);
+        } else if (e.getActionCommand().equals("reset")) {
+            Leaderboard.resetLeaderboard(team);
         }
         updateDisplay();
     }
@@ -228,6 +245,28 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         }
         leaderboard.sortLeaderboard(team);
         nameField.setText("");
+    }
+
+    // EFFECTS: saves the leaderboard to file
+    private void save() {
+        try {
+            leaderboard.sortLeaderboard(team);
+            jsonWriter.open();
+            jsonWriter.write(leaderboard);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            // do nothing
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads leaderboard from file
+    private void load(Leaderboard currentLeaderboard) {
+        try {
+            leaderboard = jsonReader.read(currentLeaderboard);
+        } catch (NotOnLeaderboardException | IOException e) {
+            // do nothing
+        }
     }
 
     public static void main(String[] args) {

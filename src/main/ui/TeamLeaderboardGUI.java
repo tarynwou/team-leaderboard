@@ -1,10 +1,15 @@
 package ui;
 
+import model.Leaderboard;
+import model.Profile;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 
 // CREDITS: LabelChanger and TextInputDemo
 
@@ -14,12 +19,20 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     private JLabel label;
     private JTextField field;
 
+    private ArrayList<Profile> team = new ArrayList<Profile>();
+    private Leaderboard leaderboard = new Leaderboard(team);
 
-    //actual fields
-    JTextField name;
-    JTextField comment;
-    JTextField teammate;
-    JSpinner action;
+    JTextField nameField = new JTextField();
+    JTextField commentField = new JTextField();
+    JTextField teammateField = new JTextField();
+    JSpinner actionField;
+
+    JLabel nameLabel;
+    JLabel actionLabel;
+    JLabel commentLabel;
+    JLabel teammateLabel;
+
+    JLabel display;
 
     private static int GAP = 10;
     private static int SCREEN_WIDTH = 800;
@@ -65,6 +78,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         middlePanel.setBounds(SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 2, SCREEN_HEIGHT);
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.PAGE_AXIS));
         middlePanel.setBackground(Color.CYAN);
+        middlePanel.add(setUpMiddlePanel());
 
         rightPanel.setBounds(SCREEN_WIDTH * 3 / 4, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
@@ -76,6 +90,34 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         add(rightPanel);
     }
 
+    private Component setUpMiddlePanel() {
+        JPanel middlePanelSetup = new JPanel();
+        display = new JLabel();
+        middlePanelSetup.add(display);
+        updateDisplay();
+        return middlePanelSetup;
+    }
+
+    private void updateDisplay() {
+        display.setText(formatLeaderboard());
+    }
+
+    private String formatLeaderboard() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html><p align=center>");
+        sb.append("TEAM LEADERBOARD");
+        sb.append("<br>");
+        for (Profile p: team) {
+            sb.append(p.getName()); // get name
+            sb.append(" - ");
+            sb.append(p.getPoints()); // get points
+            sb.append("<br>");
+        }
+        sb.append("</p></html>");
+        return sb.toString();
+    }
+
+
     private Component setUpRightPanel() {
         JPanel rightPanelSetup = new JPanel();
         JPanel teammatePanel = new JPanel();
@@ -83,18 +125,44 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
         JLabel teammatesTitle = new JLabel("TEAMMATES");
         JLabel entryTitle = new JLabel("LOG ENTRY");
 
+        rightPanelSetup.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
         rightPanelSetup.add(teammatePanel);
         rightPanelSetup.add(entryPanel);
+        rightPanelSetup.setBackground(Color.PINK);
 
+        teammatePanel.setLayout(new BoxLayout(teammatePanel, BoxLayout.Y_AXIS));
+        //TODO: setBounds doesn't work
         teammatePanel.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
-        teammatePanel.setBackground(Color.orange);
+        teammatePanel.setBackground(Color.ORANGE);
         teammatePanel.add(teammatesTitle);
+        addTextField(teammatePanel, nameLabel, nameField, "Name: ");
+        addButton(teammatePanel, "Add", "add");
+        addButton(teammatePanel, "Remove", "remove");
 
+//        entryPanel.setLayout(new SpringLayout(teammatePanel, SpringLayout.HEIGHT));
+//        entryPanel.setLayout(new SpringLayout());
+//        entryPanel.makeCompactGrid();
+        //TODO: setBounds doesn't work
         entryPanel.setBounds(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
-        entryPanel.setBackground(Color.red);
+        entryPanel.setBackground(Color.RED);
         entryPanel.add(entryTitle);
+        actionLabel = new JLabel("Action: ");
+        actionField = new JSpinner();
+        entryPanel.add(actionLabel);
+        entryPanel.add(actionField);
 
-        return rightPanelSetup; //TODO: fix this.
+
+        addTextField(entryPanel, commentLabel, commentField, "Comment: ");
+        addTextField(entryPanel, teammateLabel, teammateField, "Teammate: ");
+
+        return rightPanelSetup;
+    }
+
+    public void addTextField(JPanel panel, JLabel label, JTextField field, String text) {
+        label = new JLabel(text);
+        field.setColumns(10);
+        panel.add(label);
+        panel.add(field);
     }
 
     protected JComponent createLeftButtons() {
@@ -131,7 +199,18 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
             label.setText(field.getText());
         } else if (e.getActionCommand().equals("quit")) {
             System.exit(0);
+        } else if (e.getActionCommand().equals("add")) {
+            addTeammate();
         }
+        updateDisplay();
+    }
+
+    private void addTeammate() {
+        String name = nameField.getText();
+        Profile newTeammate = new Profile(name);
+        leaderboard.addProfile(newTeammate);
+        leaderboard.sortLeaderboard(team);
+        nameField.setText("");
     }
 
     public static void main(String[] args) {

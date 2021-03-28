@@ -12,8 +12,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +34,6 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     // Sounds
     private static String SAVE_SOUND = "./data/text_sounds.wav";
     private static String LOAD_SOUND = "./data/super_mario_mushroom.wav";
-
-    //TODO: add documentation
 
     private ArrayList<Profile> team = new ArrayList<Profile>();
     private Leaderboard leaderboard = new Leaderboard(team);

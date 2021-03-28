@@ -27,8 +27,8 @@ import java.util.ConcurrentModificationException;
 public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusListener {
     // Save and reload fields
     private static final String JSON_STORE = "./data/leaderboard.json";
-    private JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
-    private JsonReader jsonReader = new JsonReader(JSON_STORE);
+    private final JsonWriter jsonWriter = new JsonWriter(JSON_STORE);
+    private final JsonReader jsonReader = new JsonReader(JSON_STORE);
 
     //TODO: redo this lol + add documentation
     private JLabel label;
@@ -119,7 +119,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     }
 
     private String formatLeaderboard() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<html><p align=center>");
         sb.append("<br>");
         sb.append("TEAM LEADERBOARD");
@@ -141,6 +141,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         JPanel teammatePanel = new JPanel();
         JPanel entryPanel = new JPanel();
 
+        rightPanelSetup.setLayout(new GridLayout(2, 1));
         rightPanelSetup.add(teammatePanel);
         rightPanelSetup.add(entryPanel);
         rightPanelSetup.setBackground(Color.PINK);
@@ -154,7 +155,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     private void setUpEntryPanel(JPanel entryPanel) {
         JLabel entryTitle = new JLabel("LOG ENTRY");
         entryPanel.setLocation(0, SCREEN_HEIGHT / 2);
-        entryPanel.setBackground(Color.RED);
+        entryPanel.setBackground(Color.DARK_GRAY);
         entryPanel.add(entryTitle);
         createEntryFields();
     }
@@ -162,11 +163,13 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     private void setUpTeammatePanel(JPanel teammatePanel) {
         JLabel teammatesTitle = new JLabel("TEAMMATES");
         teammatePanel.setLayout(new BoxLayout(teammatePanel, BoxLayout.Y_AXIS));
-        //TODO: setBounds doesn't work
-        teammatePanel.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
         teammatePanel.setBackground(Color.ORANGE);
         teammatePanel.add(teammatesTitle);
-        addTextField(teammatePanel, nameLabel, nameField, "Name: ");
+
+        nameLabel = new JLabel("Name: ");
+        nameField.setColumns(10);
+        teammatePanel.add(nameLabel);
+        teammatePanel.add(nameField);
         addButton(teammatePanel, "Add", "add");
         addButton(teammatePanel, "Remove", "remove");
     }
@@ -210,14 +213,14 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
             panel.add(fields[i]);
 
             //Add listeners to each field.
-            JTextField tf = null;
-            if (fields[i] instanceof JSpinner) {
-                tf = getTextField((JSpinner) fields[i]);
-            } else {
-                tf = (JTextField) fields[i];
-            }
-            tf.addActionListener(this);
-            tf.addFocusListener(this);
+//            JTextField tf = null;
+//            if (fields[i] instanceof JSpinner) {
+//                tf = getTextField((JSpinner) fields[i]);
+//            } else {
+//                tf = (JTextField) fields[i];
+//            }
+//            tf.addActionListener(this);
+//            tf.addFocusListener(this);
         }
     }
 
@@ -237,13 +240,13 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
     }
 
     private String[] getActions() {
-        String[] stateStrings = {
+        String[] stateActions = {
                 "Copywriting (150pts)",
                 "Marketing (100pts)",
                 "Research (100pts)",
                 "something good (50pts)" // TODO: Change to "Bonus"
         };
-        return stateStrings;
+        return stateActions;
     }
 
     //TODO: review this

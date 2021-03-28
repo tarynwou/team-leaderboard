@@ -1,17 +1,25 @@
 {"profiles": [
     {
-        "entries": [],
-        "name": "a",
-        "points": 0
+        "entries": [{
+            "actionType": "copywriting",
+            "teammate": "Taryn",
+            "comment": "She was fantastic!!!! Loved it!!"
+        }],
+        "name": "Taryn",
+        "points": 150
+    },
+    {
+        "entries": [{
+            "actionType": "marketing",
+            "teammate": "Alex",
+            "comment": "she was okay..."
+        }],
+        "name": "Alex",
+        "points": 100
     },
     {
         "entries": [],
-        "name": "b",
-        "points": 0
-    },
-    {
-        "entries": [],
-        "name": "c",
+        "name": "Emily",
         "points": 0
     }
 ]}

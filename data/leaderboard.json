@@ -1,17 +1,28 @@
 {"profiles": [
     {
+        "entries": [
+            {
+                "actionType": "Copywriting (150pts)",
+                "teammate": "Kait",
+                "comment": "Great"
+            },
+            {
+                "actionType": "Research (100pts)",
+                "teammate": "Kait",
+                "comment": "Good"
+            }
+        ],
+        "name": "Kait",
+        "points": 250
+    },
+    {
         "entries": [{
             "actionType": "Copywriting (150pts)",
             "teammate": "Taryn",
             "comment": "Good"
         }],
         "name": "Taryn",
-        "points": 0
-    },
-    {
-        "entries": [],
-        "name": "Kait",
-        "points": 0
+        "points": 150
     },
     {
         "entries": [],

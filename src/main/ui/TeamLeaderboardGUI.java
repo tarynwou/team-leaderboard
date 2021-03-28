@@ -241,7 +241,7 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         return stateActions;
     }
 
-    //TODO: review this
+    //TODO: review this and delete
     public JFormattedTextField getTextField(JSpinner spinner) {
         JComponent editor = spinner.getEditor();
         if (editor instanceof JSpinner.DefaultEditor) {
@@ -313,11 +313,20 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener, FocusL
         for (Profile teammate : team) {
             if (teammate.getName().contains(name)) {
                 teammate.addToEntryList(entry);
+                if (actionType == "Copywriting (150pts)") {
+                    teammate.addPoints(150);
+                } else if (entry.getActionType() == "Marketing (100pts)") {
+                    teammate.addPoints(100);
+                } else if (entry.getActionType() == "Research (100pts)") {
+                    teammate.addPoints(100);
+                } else if (entry.getActionType() == "Bonus (50pts)") {
+                    teammate.addPoints(50);
+                }
             }
         }
         leaderboard.sortLeaderboard(team);
-//        commentField.setText("");
-//        teammateField.setText("");
+        commentField.setText("");
+        teammateField.setText("");
     }
 
     private void addTeammate() {

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 // Creates the graphical user interfaces for Team Leaderboard
 public class TeamLeaderboardGUI extends JFrame implements ActionListener {
-    //TODO: redo this lol
+    //TODO: redo this lol + add documentation
     private JLabel label;
     private JTextField field;
 
@@ -68,12 +68,33 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
 
         rightPanel.setBounds(SCREEN_WIDTH * 3 / 4, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT);
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-//        rightPanel.add(setUpRightPanel());
+        rightPanel.add(setUpRightPanel());
         rightPanel.setBackground(Color.GREEN);
 
         add(leftPanel);
         add(middlePanel);
         add(rightPanel);
+    }
+
+    private Component setUpRightPanel() {
+        JPanel rightPanelSetup = new JPanel();
+        JPanel teammatePanel = new JPanel();
+        JPanel entryPanel = new JPanel();
+        JLabel teammatesTitle = new JLabel("TEAMMATES");
+        JLabel entryTitle = new JLabel("LOG ENTRY");
+
+        rightPanelSetup.add(teammatePanel);
+        rightPanelSetup.add(entryPanel);
+
+        teammatePanel.setBounds(0, 0, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
+        teammatePanel.setBackground(Color.orange);
+        teammatePanel.add(teammatesTitle);
+
+        entryPanel.setBounds(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
+        entryPanel.setBackground(Color.red);
+        entryPanel.add(entryTitle);
+
+        return rightPanelSetup; //TODO: fix this.
     }
 
     protected JComponent createLeftButtons() {
@@ -108,6 +129,8 @@ public class TeamLeaderboardGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("myButton")) {
             label.setText(field.getText());
+        } else if (e.getActionCommand().equals("quit")) {
+            System.exit(0);
         }
     }
 

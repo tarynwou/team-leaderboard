@@ -29,6 +29,7 @@ opportunity to try it out!
 - As a user, I want to be able to reload my last leaderboard from file
 
 ## Phase 4: Task 2
-I have chosen to test and design my Leaderboard class to be robust.
+I have chosen to test and design my Leaderboard class to be robust. The removeProfile(String name) method throws the
+NotOnLeaderboardException.
 
 ## Phase 4: Task 3

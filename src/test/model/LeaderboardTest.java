@@ -122,6 +122,7 @@ public class LeaderboardTest {
             testleaderboard.removeProfile("Cheryl");
             fail();
         } catch (NotOnLeaderboardException e) {
+            // catches the exception!
         } catch (ConcurrentModificationException e) {
 
         }

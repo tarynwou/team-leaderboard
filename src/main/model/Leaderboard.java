@@ -108,7 +108,6 @@ public class Leaderboard implements Writable {
     }
 
     /*
-     * REQUIRES: rank is >=1 //TODO: check if you can just remove this because it will never be given <1
      * MODIFIES: profiles
      * EFFECTS: moves a profile up the list (closer to index 0) if it has more points than the profile in front of it
      */

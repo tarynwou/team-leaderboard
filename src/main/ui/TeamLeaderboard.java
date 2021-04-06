@@ -20,7 +20,6 @@ import java.util.Scanner;
 public class TeamLeaderboard {
     private ArrayList<Profile> team = new ArrayList<Profile>();
     private Leaderboard leaderboard;
-    private Profile teammate;
     private Scanner input;
 
     private static final String JSON_STORE = "./data/leaderboard.json";
@@ -87,13 +86,12 @@ public class TeamLeaderboard {
      * MODIFIES: this
      * EFFECTS: processes user command
      */
-    //TODO: Add viewEntries()/viewProfile method.
     private void processCommand(String command) {
         if (command.equals("a")) {
             addTeammate();
         } else if (command.equals("d")) {
             removeTeammate();
-        } else if (command.equals("e")) {   //TODO: user should receive a message if the user DNE
+        } else if (command.equals("e")) {
             logEntry();
         } else if (command.equals("l")) {
             showLeaderboard();

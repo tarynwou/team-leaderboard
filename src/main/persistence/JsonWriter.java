@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of leaderboard to file
 public class JsonWriter {
-    private static final int TAB = 4; //TODO: find out what this TAB is for
+    private static final int TAB = 4;
     private PrintWriter writer;
     private String destination;
 
@@ -29,7 +29,7 @@ public class JsonWriter {
     // EFFECTS: writes JSON representation of leaderboard to file
     public void write(Leaderboard leaderboard) {
         JSONObject json = leaderboard.toJson();
-        saveToFile(json.toString(TAB)); //TODO: find out what this TAB is for
+        saveToFile(json.toString(TAB));
     }
 
     // MODIFIES: this

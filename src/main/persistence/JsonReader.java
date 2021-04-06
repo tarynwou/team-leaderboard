@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 // Represents a reader that reads leaderboard from JSON data stored in file
@@ -46,8 +45,6 @@ public class JsonReader {
     // MODIFIES: this
     // EFFECTS: parses leaderboard from JSON object and returns it
     private Leaderboard parseLeaderboard(JSONObject jsonObject, Leaderboard cl) {
-//        ArrayList<Profile> emptyProfileList = new ArrayList<Profile>();
-//        Leaderboard leaderboard = new Leaderboard(emptyProfileList);
         cl.clearLeaderboard();
         addProfiles(cl, jsonObject);
         return cl;

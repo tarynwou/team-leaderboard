@@ -33,3 +33,8 @@ I have chosen to test and design my Leaderboard class to be robust as Task 2. Th
 throws the NotOnLeaderboardException.
 
 ## Phase 4: Task 3
+- I would refactor my TeamLeaderboardGUI to split the panel setup and the functionalities (actions) into 2 classes
+
+In the TeamLeaderboardGUI class:
+- I would refactor my sound playing methods to make one general method that I can use for both sounds in my program
+- I would refactor parts of my initializeEntryFields method to make a general method that initializes a single field 

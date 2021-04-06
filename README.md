@@ -27,3 +27,8 @@ opportunity to try it out!
 - As a user, I want to be able to reset the point system
 - As a user, I want to be able to save my leaderboard to file
 - As a user, I want to be able to reload my last leaderboard from file
+
+## Phase 4: Task 2
+I have chosen to test and design my Leaderboard class to be robust.
+
+## Phase 4: Task 3

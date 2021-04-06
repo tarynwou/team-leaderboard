@@ -8,7 +8,6 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-//TODO: Fix tests
 
 // Represents the leaderboard with teammates and respective points
 public class Leaderboard implements Writable {
@@ -82,7 +81,6 @@ public class Leaderboard implements Writable {
     }
 
     /*
-     * REQUIRES: non-empty team
      * EFFECTS: prints out the leaderboard
      */
     public static String showLeaderboard(ArrayList<Profile> team) {
@@ -94,7 +92,6 @@ public class Leaderboard implements Writable {
     }
 
     /*
-     * REQUIRES: profiles is a non-empty list
      * MODIFIES: profiles
      * EFFECTS: resets all the profiles' points to zero
      */
@@ -111,7 +108,7 @@ public class Leaderboard implements Writable {
     }
 
     /*
-     * REQUIRES: rank is >=1
+     * REQUIRES: rank is >=1 //TODO: check if you can just remove this because it will never be given <1
      * MODIFIES: profiles
      * EFFECTS: moves a profile up the list (closer to index 0) if it has more points than the profile in front of it
      */
@@ -126,7 +123,6 @@ public class Leaderboard implements Writable {
     }
 
     /*
-     * REQUIRES: profiles is a non-empty list
      * MODIFIES: profiles
      * EFFECTS: sorts the leaderboard by number of points in each profile; the smaller the index, the more points
      */
